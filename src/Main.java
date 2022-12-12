@@ -23,7 +23,7 @@ public class Main {
             MenuController mc = new MenuController(menu, cm, am, pm);
             mc.run();
         }catch(Exception ex){   //Filenotfoud exepcion
-            menu.showMessage("Error: The monsters.json file can’t be accessed.");
+            menu.showMessage("Error: The monsters.json file can’t be accessed.");   //monsters o caracters
         }
 
     }
