@@ -57,9 +57,25 @@ public class MenuView {
             }
         }
         if(contains) {
-            System.out.println("Name can't contain special caracters.");
+            System.out.println("\nName can't contain special characters.");
         }
             return contains;
+    }
+    public int askNumberInARange(String message, int min, int max){
+        do {
+            System.out.print(message);
+            String evaluate = scanner.nextLine();
+            try {
+                int num = Integer.parseInt(evaluate);
+                if (num < min || num > max) {
+                    System.out.println("\nWrong number try again.");
+                } else {
+                    return num;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\nWrong number try again.");
+            }
+        } while (true);
     }
 }
 
