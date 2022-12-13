@@ -84,10 +84,13 @@ public class MenuController {
                     "Mind:   You rolled  "+ mind +" ("+ mindA +" and "+ mindB +").\n" +
                     "Spirit: You rolled "+ spirit +" ("+ spiritA +" and "+ spiritB +").\n");
             //Convertir daus en estadistica
+            int bodySt = cm.adjudicateStatistics(body);
+            int mindSt = cm.adjudicateStatistics(mind);
+            int spiritSt = cm.adjudicateStatistics(spirit);
             menu.showMessage("\nYour stats are:\n" +
-                    "  - Body: -1\n" +
-                    "  - Mind: +2\n" +
-                    "  - Spirit: +1");
+                    "  - Body: "+ bodySt +"\n" +
+                    "  - Mind: "+ mindSt +"\n" +
+                    "  - Spirit: "+ spiritSt +"");
             //Afegeix al Json el personatge amb info.
             String classe = "Adventurer";       //Fer una classe d'aquest tipus de personatges??
             menu.showMessage("\nThe new character "+name+" has been created.");

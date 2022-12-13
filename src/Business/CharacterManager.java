@@ -9,7 +9,7 @@ public class CharacterManager {
     public CharacterManager(CharactersJsonDAO charJsonDAO) {
         this.charJsonDAO = charJsonDAO;
     }
-
+/*
     public String changeName(String name){
         String newName;
         char newLetter;
@@ -25,5 +25,21 @@ public class CharacterManager {
         }
 
         return newName;
+    }*/
+    public int adjudicateStatistics(int num){
+        int newNumber =0;
+        // 1 i 2???
+        if(num == 2){
+            newNumber = -1;
+        }else if(num>=3 && num<=5){
+            newNumber = 0;
+        } if(num>=6 && num<=9){
+            newNumber = 1;
+        }else if(num>=10 && num<=11){
+            newNumber = 2;
+        }else{
+            newNumber = 3;
+        }
+        return newNumber;
     }
 }
