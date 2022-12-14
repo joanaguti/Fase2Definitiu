@@ -21,4 +21,12 @@ public class Character {
         this.mind = mind;
         this.spirit = spirit;
     }
+
+    public String getCharacterName() {
+        return characterName;
+    }
+
+    public String getNamePlayer() {
+        return namePlayer;
+    }
 }

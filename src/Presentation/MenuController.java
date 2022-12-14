@@ -2,9 +2,11 @@ package Presentation;
 
 import Business.AdventureManager;
 import Business.CharacterManager;
+import Business.Entity.Monster;
 import Business.PlayManager;
 import Presentation.Views.MenuView;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MenuController {
@@ -56,6 +58,8 @@ public class MenuController {
     }
 
     private void createCharacters(){
+        ArrayList<Monster> monsters =  am.getAllMonsters();
+
         menu.showMessage("Tavern keeper: “Oh, so you are new to this land.”\n“What’s your name?”");
         String name = menu.askForString("\n-> Enter your name: ");
         Boolean contains = menu.checkSpecialChar(name);// CONTROLAR ESPAIS. SI S'ACCEPTEN ACCENTS TAMBE!
@@ -70,12 +74,12 @@ public class MenuController {
             int level = menu.askNumberInARange("\n-> Enter the character’s level [1..10]: ", 1, 10);
             menu.showMessage("\nTavern keeper: “Oh, so you are level "+ level +"!”");
             menu.showMessage("“Great, let me get a closer look at you...”");
-            int bodyA = rollDice(0, 6);
-            int bodyB = rollDice(0, 6);
-            int mindA = rollDice(0, 6);
-            int mindB = rollDice(0, 6);
-            int spiritA = rollDice(0, 6);
-            int spiritB = rollDice(0, 6);
+            int bodyA = rollDice(6, 1);
+            int bodyB = rollDice(6, 1);
+            int mindA = rollDice(6, 1);
+            int mindB = rollDice(6, 1);
+            int spiritA = rollDice(6, 1);
+            int spiritB = rollDice(6, 1);
             int body = bodyA + bodyB;
             int mind = mindA + mindB;
             int spirit = spiritA + spiritB;
@@ -101,7 +105,31 @@ public class MenuController {
     private void listCharacters(){
         menu.showMessage("Tavern keeper: “Lads! They want to see you!”\n“Who piques your interest?”");
         String player = menu.askForString("\n-> Enter the name of the Player to filter: ");
-        //List characters (characters manager-> retorna llista) li paso a menu.showList.
+        // ArrayList<Character> characters = cm.filterCharacters(player);
+        //Llist characters
+        int index = menu.askNumberInARange("", 0, 12);      //Change maxim a num de elements.
+        menu.showMessage("Tavern keeper: “Hey Jinx get here; the boss wants to see you!”");     //Change Jinx per nom i elements per return
+        //busca personatje per nom (DAO o manager)
+        menu.showMessage("* Name:   Jinx\n" +
+                "* Player: IPlayLOLInClass\n" +
+                "* Class:  Adventurer\n" +
+                "* Level:  2\n" +
+                "* XP:     132\n" +
+                "* Body:   +1\n" +
+                "* Mind:   -1\n" +
+                "* Spirit: +3");
+        menu.showMessage("[Enter name to delete, or press enter to cancel]");
+        String nameDel = menu.askForString("Do you want to delete Jinx?");      //Change name
+        // COntrolar error en el nom pag 4.
+        // Busca pel nom i return false -> misatge derrror -> no l'intento esborrar
+        // Boolean delate = cm.deleteCharacter(nameDel);
+        /*if(delate){
+            menu.showMessage("Tavern keeper: “I’m sorry kiddo, but you have to leave.”\n" +
+                    "Character Jinx left the Guild.");                                          // Change Name
+        }*/
+
+
+
     }
 
     private void createAdventure(){

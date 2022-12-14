@@ -1,13 +1,18 @@
 package Business;
 
+import Business.Entity.Monster;
 import Persistence.CharactersJsonDAO;
 import Persistence.MonstersJsonDAO;
 
+import java.util.ArrayList;
+
 public class CharacterManager {
     private CharactersJsonDAO charJsonDAO;
+    private Character character;
 
     public CharacterManager(CharactersJsonDAO charJsonDAO) {
         this.charJsonDAO = charJsonDAO;
+        this.character = null;
     }
 /*
     public String changeName(String name){
@@ -41,5 +46,24 @@ public class CharacterManager {
             newNumber = 3;
         }
         return newNumber;
+    }
+
+    ArrayList<String> filterCharacters(String player){                  //Retorna tots els noms de personatge
+        ArrayList <Character> characters = charJsonDAO.readFile();
+        ArrayList<String> names = new ArrayList<>();
+        if(!player.equals(" ")){
+            for(int i=0; i<characters.size(); i++){
+                Character character = characters.get(i);
+                /*if(player.equals(character.getNamePlayer())){
+                    names.add(character.getCharacterName());
+                }*/
+            }
+        }else{                                                         // Si entran espai retorno tots els noms
+            for(int i=0; i<characters.size(); i++){
+                Character character = characters.get(i);
+                //names.add(character.getCharacterName());
+            }
+        }
+        return names;
     }
 }
