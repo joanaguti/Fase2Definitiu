@@ -1,5 +1,6 @@
 package Presentation.Views;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -76,6 +77,12 @@ public class MenuView {
                 System.out.println("\nWrong number try again.");
             }
         } while (true);
+    }
+    public void showList(String message, ArrayList<String> list){
+        for(int i=0; i<list.size(); i++){
+            String output = list.get(i);
+            System.out.println(i+1+". "+output);
+        }
     }
 }
 

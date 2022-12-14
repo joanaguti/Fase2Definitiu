@@ -1,5 +1,6 @@
 import Business.AdventureManager;
 import Business.CharacterManager;
+import Business.Dice;
 import Business.PlayManager;
 import Persistence.AdventuresJsonDAO;
 import Persistence.CharactersJsonDAO;
@@ -15,12 +16,13 @@ public class Main {
         try{
             CharactersJsonDAO charJsonDAO = new CharactersJsonDAO();
             AdventuresJsonDAO advJsonDAO = new AdventuresJsonDAO();
+            Dice dice = new Dice();
 
             MonstersJsonDAO monstJsonDAO = new MonstersJsonDAO();
             CharacterManager cm = new CharacterManager(charJsonDAO);
             AdventureManager am = new AdventureManager(advJsonDAO, monstJsonDAO);
             PlayManager pm = new PlayManager();
-            MenuController mc = new MenuController(menu, cm, am, pm);
+            MenuController mc = new MenuController(menu, cm, am, pm, dice);
             mc.run();
         }catch(Exception ex){   //Filenotfoud exepcion
             menu.showMessage("Error: The monsters.json file can’t be accessed.");   //monsters o caracters
