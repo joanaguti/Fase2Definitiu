@@ -64,13 +64,12 @@ public class MenuController {
     }
 
     private void createCharacters(){
-
         menu.showMessage("\nTavern keeper: “Oh, so you are new to this land.”\n“What’s your name?”");
         String name = menu.askForString("\n-> Enter your name: ");
         Boolean contains = menu.checkSpecialChar(name);// CONTROLAR ESPAIS. SI S'ACCEPTEN ACCENTS TAMBE!
         if(!contains){
             //Modifica nom a manager (Upper i Lower exemple jOAnA = Joana)
-            Boolean exists =  cm.characterExixts(name);
+            Boolean exists =  cm.characterExists(name);
             //Comprobem que no exixteixi el personatge.
             if(!exists){
                 menu.showMessage("\nTavern keeper: “Hello, "+ name +", be welcome.”");
@@ -94,7 +93,6 @@ public class MenuController {
                 menu.showMessage("\nBody:   You rolled "+ body +" ("+ bodyA +" and "+ bodyB +").\n" +
                         "Mind:   You rolled  "+ mind +" ("+ mindA +" and "+ mindB +").\n" +
                         "Spirit: You rolled "+ spirit +" ("+ spiritA +" and "+ spiritB +").\n");
-                //Convertir daus en estadistica
                 int bodySt = cm.adjudicateStatistics(body);
                 int mindSt = cm.adjudicateStatistics(mind);
                 int spiritSt = cm.adjudicateStatistics(spirit);
@@ -106,16 +104,17 @@ public class MenuController {
                 String classe = "Adventurer";       //Fer una classe d'aquest tipus de personatges??
                 menu.showMessage("\nThe new character "+name+" has been created.");
             }else{
-                menu.showMessage("Character already exixts\n");
+                menu.showMessage("\nCharacter already exists");
             }
         }
 
     }
 
     private void listCharacters(){
-        menu.showMessage("Tavern keeper: “Lads! They want to see you!”\n“Who piques your interest?”");
+        menu.showMessage("\nTavern keeper: “Lads! They want to see you!”\n“Who piques your interest?”");
         String player = menu.askForString("\n-> Enter the name of the Player to filter: ");
-        // ArrayList<Character> characters = cm.filterCharacters(player);
+        ArrayList<String> names = cm.filterCharacters(player);
+        menu.showList(names);
         //Llist characters menu.showList();
         int index = menu.askNumberInARange("", 0, 12);      //Change maxim a num de elements.
         menu.showMessage("Tavern keeper: “Hey Jinx get here; the boss wants to see you!”");     //Change Jinx per nom i elements per return

@@ -48,27 +48,11 @@ public class CharacterManager {
         }
         return newNumber;
     }
-    public Boolean characterExixts(String name){
+    public Boolean characterExists(String name){
         return charJsonDAO.findCharacter(name);
     }
 
-    /*
-    ArrayList<String> filterCharacters(String player){                  //Retorna tots els noms de personatge
-        ArrayList <Character> characters = charJsonDAO.readFile();
-        ArrayList<String> names = new ArrayList<>();
-        if(!player.equals(" ")){
-            for(int i=0; i<characters.size(); i++){
-                Character character = characters.get(i);
-                if(player.equals(character.getNamePlayer())){
-                    names.add(character.getCharacterName());
-                }
-            }
-        }else{                                                         // Si entran espai retorno tots els noms
-            for(int i=0; i<characters.size(); i++){
-                Character character = characters.get(i);
-                //names.add(character.getCharacterName());
-            }
-        }
-        return names;
-    }*/
+    public ArrayList<String> filterCharacters(String player){
+        return charJsonDAO.selectCharacters(player);
+    }
 }

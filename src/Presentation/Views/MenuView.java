@@ -78,11 +78,13 @@ public class MenuView {
             }
         } while (true);
     }
-    public void showList(String message, ArrayList<String> list){
+    public void showList(ArrayList<String> list){
+        System.out.println("\nYou watch as some adventurers get up from their chairs and approach you.\n");
         for(int i=0; i<list.size(); i++){
             String output = list.get(i);
             System.out.println(i+1+". "+output);
         }
+        System.out.println("\n0. Back");
     }
 }
 

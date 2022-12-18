@@ -70,5 +70,23 @@ public class CharactersJsonDAO {
             }
             return false;
         }
+    public ArrayList<String> selectCharacters(String player){                  //Retorna tots els noms de personatge
+        ArrayList <Character> characters = carregarEdicions();
+        ArrayList<String> names = new ArrayList<>();
+        if(!player.equals(" ")){
+            for(int i=0; i<characters.size(); i++){
+                Character character = characters.get(i);
+                if(player.equals(character.getNamePlayer())){
+                    names.add(character.getCharacterName());
+                }
+            }
+        }else{                                                         // Si entran espai retorno tots els noms
+            for(int i=0; i<characters.size(); i++){
+                Character character = characters.get(i);
+                //names.add(character.getCharacterName());
+            }
+        }
+        return names;
+    }
 
 }
