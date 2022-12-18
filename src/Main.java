@@ -24,7 +24,7 @@ public class Main {
             PlayManager pm = new PlayManager();
             MenuController mc = new MenuController(menu, cm, am, pm, dice);
             mc.run();
-        }catch(Exception ex){   //Filenotfoud exepcion
+        }catch(Exception ex){   //Filenotfoud exepcion connectar daos
             menu.showMessage("Error: The monsters.json file can’t be accessed.");   //monsters o caracters
         }
 

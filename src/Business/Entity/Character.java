@@ -4,22 +4,15 @@ public class Character {
 
     private String characterName;
     private String namePlayer;
-    private String characterType;
-    private int characterLever;
-    private int characterPoints;
+    private int xp;
+    //private int characterLever;
+    //private int characterPoints;
     private int body;
     private int mind;
     private int spirit;
+    private String characterType;
 
-    public Character(String characterName, String namePlayer, String characterType, int characterLever, int characterPoints, int body, int mind, int spirit) {
-        this.characterName = characterName;
-        this.namePlayer = namePlayer;
-        this.characterType = characterType;
-        this.characterLever = characterLever;
-        this.characterPoints = characterPoints;
-        this.body = body;
-        this.mind = mind;
-        this.spirit = spirit;
+    public Character() {
     }
 
     public String getCharacterName() {
@@ -28,5 +21,53 @@ public class Character {
 
     public String getNamePlayer() {
         return namePlayer;
+    }
+
+    public void setCharacterName(String characterName) {
+        this.characterName = characterName;
+    }
+
+    public void setNamePlayer(String namePlayer) {
+        this.namePlayer = namePlayer;
+    }
+
+    public void setCharacterType(String characterType) {
+        this.characterType = characterType;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public void setBody(int body) {
+        this.body = body;
+    }
+
+    public void setMind(int mind) {
+        this.mind = mind;
+    }
+
+    public void setSpirit(int spirit) {
+        this.spirit = spirit;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public int getBody() {
+        return body;
+    }
+
+    public int getMind() {
+        return mind;
+    }
+
+    public int getSpirit() {
+        return spirit;
+    }
+
+    public String getCharacterType() {
+        return characterType;
     }
 }

@@ -3,6 +3,7 @@ package Presentation;
 import Business.AdventureManager;
 import Business.CharacterManager;
 import Business.Dice;
+import Business.Entity.Character;
 import Business.Entity.Monster;
 import Business.PlayManager;
 import Presentation.Views.MenuView;
@@ -35,10 +36,12 @@ public class MenuController {
                 listCharacters();
                 break;
             case 3:
-                createAdventure();
+                //createAdventure();
                 break;
             case 4:
                 startAdventure();
+                break;
+            case 5:
                 break;
             default:
                 menu.showMessage("Incorrect option");
@@ -61,46 +64,50 @@ public class MenuController {
     }
 
     private void createCharacters(){
-        ArrayList<Monster> monsters =  am.getAllMonsters();
 
-        menu.showMessage("Tavern keeper: “Oh, so you are new to this land.”\n“What’s your name?”");
+        menu.showMessage("\nTavern keeper: “Oh, so you are new to this land.”\n“What’s your name?”");
         String name = menu.askForString("\n-> Enter your name: ");
         Boolean contains = menu.checkSpecialChar(name);// CONTROLAR ESPAIS. SI S'ACCEPTEN ACCENTS TAMBE!
         if(!contains){
             //Modifica nom a manager (Upper i Lower exemple jOAnA = Joana)
             // COMPROBA QUE NO EXISTEIXI EEL NOM, si existeix ERROR i menu principal fer if
-            menu.showMessage("\nTavern keeper: “Hello, "+ name +", be welcome.”");
-            menu.showMessage("“And now, if I may break the fourth wall, who is your Player?”");
-            String playerName = menu.askForString("\n-> Enter the player’s name: ");
-            menu.showMessage("\nTavern keeper: “I see, I see...”");
-            menu.showMessage("“Now, are you an experienced adventurer?”");
-            int level = menu.askNumberInARange("\n-> Enter the character’s level [1..10]: ", 1, 10);
-            menu.showMessage("\nTavern keeper: “Oh, so you are level "+ level +"!”");
-            menu.showMessage("“Great, let me get a closer look at you...”");
-            int bodyA = dice.rollDice(6, 1);
-            int bodyB = dice.rollDice(6, 1);
-            int mindA = dice.rollDice(6, 1);
-            int mindB = dice.rollDice(6, 1);
-            int spiritA = dice.rollDice(6, 1);
-            int spiritB = dice.rollDice(6, 1);
-            int body = bodyA + bodyB;
-            int mind = mindA + mindB;
-            int spirit = spiritA + spiritB;
-            menu.showMessage("\nGenerating your stats...");
-            menu.showMessage("\nBody:   You rolled "+ body +" ("+ bodyA +" and "+ bodyB +").\n" +
-                    "Mind:   You rolled  "+ mind +" ("+ mindA +" and "+ mindB +").\n" +
-                    "Spirit: You rolled "+ spirit +" ("+ spiritA +" and "+ spiritB +").\n");
-            //Convertir daus en estadistica
-            int bodySt = cm.adjudicateStatistics(body);
-            int mindSt = cm.adjudicateStatistics(mind);
-            int spiritSt = cm.adjudicateStatistics(spirit);
-            menu.showMessage("\nYour stats are:\n" +
-                    "  - Body: "+ bodySt +"\n" +
-                    "  - Mind: "+ mindSt +"\n" +
-                    "  - Spirit: "+ spiritSt +"");
-            //Afegeix al Json el personatge amb info.
-            String classe = "Adventurer";       //Fer una classe d'aquest tipus de personatges??
-            menu.showMessage("\nThe new character "+name+" has been created.");
+            Boolean exists =  cm.characterExixts(name);
+            if(!exists){
+                menu.showMessage("\nTavern keeper: “Hello, "+ name +", be welcome.”");
+                menu.showMessage("“And now, if I may break the fourth wall, who is your Player?”");
+                String playerName = menu.askForString("\n-> Enter the player’s name: ");
+                menu.showMessage("\nTavern keeper: “I see, I see...”");
+                menu.showMessage("“Now, are you an experienced adventurer?”");
+                int level = menu.askNumberInARange("\n-> Enter the character’s level [1..10]: ", 1, 10);
+                menu.showMessage("\nTavern keeper: “Oh, so you are level "+ level +"!”");
+                menu.showMessage("“Great, let me get a closer look at you...”");
+                int bodyA = dice.rollDice(6, 1);
+                int bodyB = dice.rollDice(6, 1);
+                int mindA = dice.rollDice(6, 1);
+                int mindB = dice.rollDice(6, 1);
+                int spiritA = dice.rollDice(6, 1);
+                int spiritB = dice.rollDice(6, 1);
+                int body = bodyA + bodyB;
+                int mind = mindA + mindB;
+                int spirit = spiritA + spiritB;
+                menu.showMessage("\nGenerating your stats...");
+                menu.showMessage("\nBody:   You rolled "+ body +" ("+ bodyA +" and "+ bodyB +").\n" +
+                        "Mind:   You rolled  "+ mind +" ("+ mindA +" and "+ mindB +").\n" +
+                        "Spirit: You rolled "+ spirit +" ("+ spiritA +" and "+ spiritB +").\n");
+                //Convertir daus en estadistica
+                int bodySt = cm.adjudicateStatistics(body);
+                int mindSt = cm.adjudicateStatistics(mind);
+                int spiritSt = cm.adjudicateStatistics(spirit);
+                menu.showMessage("\nYour stats are:\n" +
+                        "  - Body: "+ bodySt +"\n" +
+                        "  - Mind: "+ mindSt +"\n" +
+                        "  - Spirit: "+ spiritSt +"");
+                //Afegeix al Json el personatge amb info.
+                String classe = "Adventurer";       //Fer una classe d'aquest tipus de personatges??
+                menu.showMessage("\nThe new character "+name+" has been created.");
+            }else{
+                menu.showMessage("Character already exixts\n");
+            }
         }
 
     }
@@ -134,11 +141,11 @@ public class MenuController {
 
 
     }
-
+/*
     private void createAdventure(){
         menu.showMessage("Tavern keeper: “Planning an adventure? Good luck with that!”\n");
         String newAdventure = menu.askForString("-> Name your adventure: ");
-        /*
+
         Boolean check = am.existeixAventura(newAdventure);
         if(check) {
             menu.showMessage("Tavern keeper: “You plan to undertake Strolling through Mordor, really?”\n" +
@@ -149,13 +156,7 @@ public class MenuController {
             for(int i=0; i<numFights; i++) {
                 menu.showMessage("* Encounter " + i + " / " + numFights + "\n" +
                         "* Monsters in encounter");
-                ArrayList<String> nameMonsts = getMonstNamesFight();
-                ArrayList<Integer> numMonsts = getMonstNumFight();
-                for(int i=0; i<length;i++){
-                    String name = nameMonsts.get(i);
-                    int num = numMonsts.get(i);
-                    menu.showMessage(i+1 + ". "+name+" (x"+num+")");
-                }
+
                 //LLegir monstres aventura o si esta empty mostro empty
                 menu.showMessage("1. Add monster\n" +
                         "2. Remove monster\n" +
@@ -165,6 +166,14 @@ public class MenuController {
                 switch (option){
                     case 1:
                         //Mostra tots els monstres possibles (fitxer)
+                        ArrayList<String> monstNames =  am.getAllMonstersName();
+                        ArrayList<String> monstTypes =  am.getAllMonstersType();
+                        for(int j=0; j<monstNames.size();j++){
+                            String name = monstNames.get(i);
+                            String type = monstTypes.get(i);
+                            menu.showMessage(j+1+". "+name+"("+"type"+")");
+                        }
+
                         int indexAdd = menu.askNumberInARange("-> Choose a monster to add [1..7]: ", 1, 12);   //Posar num max de llista.
                         int amount = menu.askForInteger("-> How many NOM MONSTRE (s) do you want to add:"); //Afegir nom monstre
                         //Afegir monstre/s
@@ -188,14 +197,13 @@ public class MenuController {
                     "The new adventure "+newAdventure+" has been created.");
         }else{
             menu.showMessage("Adventure already exists.\n");
-        }*/
-    }
+        }
+    }*/
 
     private void startAdventure(){
         menu.showMessage("Tavern keeper: “So, you are looking to go on an adventure?”");
         menu.showMessage("“Where do you fancy going?”\n\nAvailable adventures:");
         //List adventures (adventure manager-> retorna llista) li paso a menu.showList.
-
     }
 
     private void stopProgram(){

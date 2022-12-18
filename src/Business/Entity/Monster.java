@@ -26,5 +26,7 @@ public class Monster {
         return name;
     }
 
-
+    public String getChallenge() {
+        return challenge;
+    }
 }

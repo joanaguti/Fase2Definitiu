@@ -21,10 +21,6 @@ public class MonstersJsonDAO {
             FileReader fr = new FileReader("Files/monsters.json");
             Monster[] listall = gson.fromJson(gson.newJsonReader(fr), Monster[].class );
             monsters = new ArrayList<Monster>(List.of(listall));
-            for(int i = 0; i<monsters.size(); i++){
-                Monster monster = monsters.get(i);
-                System.out.println("Nom Monstra= "+ monster.getNameMonster());
-            }
         }catch(FileNotFoundException e){
             // No s'ha pogut obrir el fitxer.
             System.out.println("ERROR FILE OPENING");

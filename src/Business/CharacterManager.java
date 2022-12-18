@@ -1,5 +1,6 @@
 package Business;
 
+import Business.Entity.Character;
 import Business.Entity.Monster;
 import Persistence.CharactersJsonDAO;
 import Persistence.MonstersJsonDAO;
@@ -32,13 +33,13 @@ public class CharacterManager {
         return newName;
     }*/
     public int adjudicateStatistics(int num){
-        int newNumber =0;
+        int newNumber;
         // 1 i 2???
         if(num == 2){
             newNumber = -1;
         }else if(num>=3 && num<=5){
             newNumber = 0;
-        } if(num>=6 && num<=9){
+        }else if(num>=6 && num<=9){
             newNumber = 1;
         }else if(num>=10 && num<=11){
             newNumber = 2;
@@ -47,16 +48,20 @@ public class CharacterManager {
         }
         return newNumber;
     }
+    public Boolean characterExixts(String name){
+        return charJsonDAO.findCharacter(name);
+    }
 
+    /*
     ArrayList<String> filterCharacters(String player){                  //Retorna tots els noms de personatge
         ArrayList <Character> characters = charJsonDAO.readFile();
         ArrayList<String> names = new ArrayList<>();
         if(!player.equals(" ")){
             for(int i=0; i<characters.size(); i++){
                 Character character = characters.get(i);
-                /*if(player.equals(character.getNamePlayer())){
+                if(player.equals(character.getNamePlayer())){
                     names.add(character.getCharacterName());
-                }*/
+                }
             }
         }else{                                                         // Si entran espai retorno tots els noms
             for(int i=0; i<characters.size(); i++){
@@ -65,5 +70,5 @@ public class CharacterManager {
             }
         }
         return names;
-    }
+    }*/
 }
