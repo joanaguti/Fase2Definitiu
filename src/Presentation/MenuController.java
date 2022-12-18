@@ -70,8 +70,8 @@ public class MenuController {
         Boolean contains = menu.checkSpecialChar(name);// CONTROLAR ESPAIS. SI S'ACCEPTEN ACCENTS TAMBE!
         if(!contains){
             //Modifica nom a manager (Upper i Lower exemple jOAnA = Joana)
-            // COMPROBA QUE NO EXISTEIXI EEL NOM, si existeix ERROR i menu principal fer if
             Boolean exists =  cm.characterExixts(name);
+            //Comprobem que no exixteixi el personatge.
             if(!exists){
                 menu.showMessage("\nTavern keeper: “Hello, "+ name +", be welcome.”");
                 menu.showMessage("“And now, if I may break the fourth wall, who is your Player?”");
