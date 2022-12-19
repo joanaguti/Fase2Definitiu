@@ -93,9 +93,9 @@ public class MenuController {
                 menu.showMessage("\nBody:   You rolled "+ body +" ("+ bodyA +" and "+ bodyB +").\n" +
                         "Mind:   You rolled  "+ mind +" ("+ mindA +" and "+ mindB +").\n" +
                         "Spirit: You rolled "+ spirit +" ("+ spiritA +" and "+ spiritB +").\n");
-                int bodySt = cm.adjudicateStatistics(body);
-                int mindSt = cm.adjudicateStatistics(mind);
-                int spiritSt = cm.adjudicateStatistics(spirit);
+                int bodySt = cm.generateStatistics(body);
+                int mindSt = cm.generateStatistics(mind);
+                int spiritSt = cm.generateStatistics(spirit);
                 menu.showMessage("\nYour stats are:\n" +
                         "  - Body: "+ bodySt +"\n" +
                         "  - Mind: "+ mindSt +"\n" +
@@ -115,8 +115,7 @@ public class MenuController {
         String player = menu.askForString("\n-> Enter the name of the Player to filter: ");
         ArrayList<String> names = cm.filterCharacters(player);
         menu.showList(names);
-        //Llist characters menu.showList();
-        int index = menu.askNumberInARange("", 0, 12);      //Change maxim a num de elements.
+        int index = menu.askNumberInARange("", 0, names.size());
         menu.showMessage("Tavern keeper: “Hey Jinx get here; the boss wants to see you!”");     //Change Jinx per nom i elements per return
         //busca personatje per nom (DAO o manager)
         menu.showMessage("* Name:   Jinx\n" +

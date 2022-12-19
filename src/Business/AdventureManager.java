@@ -26,6 +26,7 @@ public class AdventureManager {
     //NO ESTA FETA!!!!
     public Boolean existeixAventura(String newAdventure){
         //Si no exixteix
+        //DAO retorni boolean si el troba
         return false;
     }
 }

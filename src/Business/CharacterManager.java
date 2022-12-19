@@ -22,7 +22,7 @@ public class CharacterManager {
         boolean first = false;
         for(int i=0; i<name.length(); i++){
             if(!first){
-                newLetter = Character.toUpperCase(name.charAt(i));
+                newLetter = newName.toUpperCase(name.charAt(i) == ' ');
                 first = true;
             }else{
                 newLetter = Character.toLowerCase(name.charAt(i));
@@ -32,7 +32,7 @@ public class CharacterManager {
 
         return newName;
     }*/
-    public int adjudicateStatistics(int num){
+    public int generateStatistics(int num){
         int newNumber;
         // 1 i 2???
         if(num == 2){

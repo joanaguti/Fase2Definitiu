@@ -46,7 +46,7 @@ public class CharactersJsonDAO {
     public ArrayList<String> selectCharacters(String player){                  //Retorna tots els noms de personatge
         ArrayList <Character> characters = carregarEdicions();
         ArrayList<String> names = new ArrayList<>();
-        if(!player.equals(" ")){
+        if(!player.isEmpty()){
             for(int i=0; i<characters.size(); i++){
                 Character character = characters.get(i);
                 if(player.equals(character.getPlayer())){
