@@ -18,23 +18,14 @@ public class AdventureManager {
     }
 
     public ArrayList<String> getAllMonstersName(){
-        ArrayList<Monster> monsters = monstJsonDAO.readFile();
-        ArrayList<String> names = new ArrayList<>();
-        // Per retornar nomes names.
-        for(int i = 0; i<monsters.size(); i++){
-                Monster monster = monsters.get(i);
-                names.add(monster.getNameMonster());
-            }
-        return names;
+        return monstJsonDAO.getAllNames();
     }
     public ArrayList<String> getAllMonstersType(){
-        ArrayList<Monster> monsters = monstJsonDAO.readFile();
-        ArrayList<String> types = new ArrayList<>();
-        // Per retornar nomes names.
-        for(int i = 0; i<monsters.size(); i++){
-            Monster monster = monsters.get(i);
-            types.add(monster.getChallenge());
-        }
-        return types;
+        return monstJsonDAO.getAllTypes();
+    }
+    //NO ESTA FETA!!!!
+    public Boolean existeixAventura(String newAdventure){
+        //Si no exixteix
+        return false;
     }
 }

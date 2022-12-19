@@ -28,5 +28,25 @@ public class MonstersJsonDAO {
 
         return monsters;
     }
+    public ArrayList<String> getAllNames(){
+        ArrayList<Monster> monsters = readFile();
+        ArrayList<String> names = new ArrayList<>();
+        // Per retornar nomes names.
+        for(int i = 0; i<monsters.size(); i++){
+            Monster monster = monsters.get(i);
+            names.add(monster.getNameMonster());
+        }
+        return names;
+    }
+    public ArrayList<String> getAllTypes(){
+        ArrayList<Monster> monsters = readFile();
+        ArrayList<String> types = new ArrayList<>();
+        // Per retornar nomes names.
+        for(int i = 0; i<monsters.size(); i++){
+            Monster monster = monsters.get(i);
+            types.add(monster.getChallenge());
+        }
+        return types;
+    }
 
 }

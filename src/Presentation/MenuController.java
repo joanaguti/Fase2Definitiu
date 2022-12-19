@@ -36,7 +36,7 @@ public class MenuController {
                 listCharacters();
                 break;
             case 3:
-                //createAdventure();
+                createAdventure();
                 break;
             case 4:
                 startAdventure();
@@ -140,13 +140,13 @@ public class MenuController {
 
 
     }
-/*
+
     private void createAdventure(){
         menu.showMessage("Tavern keeper: “Planning an adventure? Good luck with that!”\n");
         String newAdventure = menu.askForString("-> Name your adventure: ");
 
         Boolean check = am.existeixAventura(newAdventure);
-        if(check) {
+        if(!check) {
             menu.showMessage("Tavern keeper: “You plan to undertake Strolling through Mordor, really?”\n" +
                     "“How long will that take?”\n");
             int numFights = menu.askNumberInARange("-> How many encounters do you want [1..4]:", 1, 4);
@@ -168,12 +168,12 @@ public class MenuController {
                         ArrayList<String> monstNames =  am.getAllMonstersName();
                         ArrayList<String> monstTypes =  am.getAllMonstersType();
                         for(int j=0; j<monstNames.size();j++){
-                            String name = monstNames.get(i);
-                            String type = monstTypes.get(i);
-                            menu.showMessage(j+1+". "+name+"("+"type"+")");
+                            String name = monstNames.get(j);
+                            String type = monstTypes.get(j);
+                            menu.showMessage(j+1+". "+name+"("+type+")");
                         }
 
-                        int indexAdd = menu.askNumberInARange("-> Choose a monster to add [1..7]: ", 1, 12);   //Posar num max de llista.
+                        int indexAdd = menu.askNumberInARange("-> Choose a monster to add [1.."+monstNames.size()+"]: ", 1, monstNames.size());   //Posar num max de llista.
                         int amount = menu.askForInteger("-> How many NOM MONSTRE (s) do you want to add:"); //Afegir nom monstre
                         //Afegir monstre/s
                         // 1. Add monster (del combat concret, arrayList de monstres de dins de fight, dins del tipo de monstre altre classe).
@@ -197,7 +197,7 @@ public class MenuController {
         }else{
             menu.showMessage("Adventure already exists.\n");
         }
-    }*/
+    }
 
     private void startAdventure(){
         menu.showMessage("Tavern keeper: “So, you are looking to go on an adventure?”");
