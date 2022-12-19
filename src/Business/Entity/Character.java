@@ -1,54 +1,29 @@
 package Business.Entity;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Character {
 
-    private String characterName;
-    private String namePlayer;
+    private String name;
+    private String player;
     private int xp;
     //private int characterLever;
     //private int characterPoints;
     private int body;
     private int mind;
     private int spirit;
+    @SerializedName("class")
     private String characterType;
 
     public Character() {
     }
 
-    public String getCharacterName() {
-        return characterName;
+    public String getName() {
+        return name;
     }
 
-    public String getNamePlayer() {
-        return namePlayer;
-    }
-
-    public void setCharacterName(String characterName) {
-        this.characterName = characterName;
-    }
-
-    public void setNamePlayer(String namePlayer) {
-        this.namePlayer = namePlayer;
-    }
-
-    public void setCharacterType(String characterType) {
-        this.characterType = characterType;
-    }
-
-    public void setXp(int xp) {
-        this.xp = xp;
-    }
-
-    public void setBody(int body) {
-        this.body = body;
-    }
-
-    public void setMind(int mind) {
-        this.mind = mind;
-    }
-
-    public void setSpirit(int spirit) {
-        this.spirit = spirit;
+    public String getPlayer() {
+        return player;
     }
 
     public int getXp() {

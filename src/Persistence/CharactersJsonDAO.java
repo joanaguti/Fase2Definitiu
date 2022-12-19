@@ -6,6 +6,8 @@ import com.google.gson.*;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,76 +19,56 @@ public class CharactersJsonDAO {
         this.gson = new Gson();
     }
 
-
-    /*
-    public ArrayList<Character> readFile(){
-        ArrayList <Character> characters = new ArrayList<Character>();
-
-        try{
-            FileReader fr = new FileReader("Files/characters.json");
-            // No podem llegir de cop.
-
-            }
-        }catch(FileNotFoundException e){
-            // No s'ha pogut obrir el fitxer.
-            System.out.println("ERROR FILE OPENING");
-        }
-
-        return characters;
-    }*/
-
     public ArrayList<Character> carregarEdicions() {
         ArrayList<Character> characters = new ArrayList<>();
         try {
             FileReader fr = new FileReader("Files/characters.json");
-            JsonElement element = JsonParser.parseReader(fr);
-            JsonArray array = element.getAsJsonArray();
-            Gson g = new Gson();
-            for (int i = 0; i < array.size(); i++) {
-                Character character = new Character();
-                JsonElement pos = array.get(i);
-                JsonObject aux = pos.getAsJsonObject();
-                character.setCharacterName(aux.get("name").getAsString());
-                character.setNamePlayer(aux.get("player").getAsString());
-                character.setXp(aux.get("xp").getAsInt());
-                character.setBody(aux.get("body").getAsInt());
-                character.setMind(aux.get("mind").getAsInt());
-                character.setSpirit(aux.get("spirit").getAsInt());
-                character.setCharacterType(aux.get("class").getAsString());
-                characters.add(character);
-            }
+            Character[] listall = gson.fromJson(gson.newJsonReader(fr), Character[].class );
+            characters = new ArrayList<Character>(List.of(listall));
+            //Fer switch segons tipus de character
+
         } catch (FileNotFoundException e) {
             System.out.println("Error opening");
         }
         return characters;
         }
-        public Boolean findCharacter(String name){
-            ArrayList<Character> characters = carregarEdicions();
-            for (int i = 0; i < characters.size(); i++) {
-                String output = characters.get(i).getCharacterName();
-                if(name.equals(output)){
-                    return true;
-                }
+
+    public Boolean findCharacter(String name){
+        ArrayList<Character> characters = carregarEdicions();
+        for (int i = 0; i < characters.size(); i++) {
+            String output = characters.get(i).getName();
+            if(name.equals(output)){
+                return true;
             }
-            return false;
         }
+        return false;
+    }
     public ArrayList<String> selectCharacters(String player){                  //Retorna tots els noms de personatge
         ArrayList <Character> characters = carregarEdicions();
         ArrayList<String> names = new ArrayList<>();
         if(!player.equals(" ")){
             for(int i=0; i<characters.size(); i++){
                 Character character = characters.get(i);
-                if(player.equals(character.getNamePlayer())){
-                    names.add(character.getCharacterName());
+                if(player.equals(character.getPlayer())){
+                    names.add(character.getName());
                 }
             }
         }else{                                                         // Si entran espai retorno tots els noms
             for(int i=0; i<characters.size(); i++){
                 Character character = characters.get(i);
-                //names.add(character.getCharacterName());
+                names.add(character.getName());
             }
         }
         return names;
+    }
+
+    public void writeFile(Character character)throws IOException {
+        ArrayList<Character> characters = carregarEdicions();
+        characters.add(character);
+        // escriu nou characters
+        FileWriter fw = new FileWriter("Files/Characters.json");
+        gson.toJson(characters, fw);
+        fw.close();
     }
 
 }
