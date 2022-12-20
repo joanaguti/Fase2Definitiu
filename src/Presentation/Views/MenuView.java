@@ -1,5 +1,6 @@
 package Presentation.Views;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -49,18 +50,29 @@ public class MenuView {
     }
     public boolean checkSpecialChar(String word) {
         boolean contains = false;
-        int numAscii = 0;
-        for(int i=0; i<word.length(); i++){
-            char c = word.charAt(i);
-            numAscii = (int) c;
-            if(numAscii < 'A' || numAscii > 'Z' && numAscii < 'a' || numAscii > 'z'){
-                contains = true;     //Te un caracter especial
+        char auxChr;
+        word = Normalizer.normalize(word , Normalizer.Form.NFD);
+        word = word.replaceAll("[^\\p{ASCII}]", "");
+        System.out.println("WORD DPS DE LA VAINA RARA: " + word);
+        char[] wordChr = word.toCharArray();
+
+        for (int i = 0; i < word.length(); i ++){
+            if ((wordChr[i] < 'A' || wordChr[i] > 'Z' && wordChr[i] < 'a' || wordChr[i] > 'z') && (wordChr[i] != ' ')){
+                contains = true;
+                //return true, millor no?
+                System.out.println("ENTRA PERQUE NO ES UNA LLETRA");
+            } else{
+                if (wordChr[i] == ' '){
+                    System.out.println("ENTRA PERQUE ES UN ESPAI O TILDE");
+                    contains = false;
+                }
             }
         }
         if(contains) {
-            System.out.println("\nName can't contain special characters.");
+            //System.out.println("\nName can't contain special characters.");
+            showMessage("\nName can't contain special characters.");
         }
-            return contains;
+        return contains;
     }
     public int askNumberInARange(String message, int min, int max){
         do {

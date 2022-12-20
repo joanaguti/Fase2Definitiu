@@ -1,7 +1,6 @@
 package Persistence;
 
 import Business.Entity.Character;
-import Business.Entity.Monster;
 import com.google.gson.*;
 
 import java.io.FileNotFoundException;
@@ -19,7 +18,7 @@ public class CharactersJsonDAO {
         this.gson = new Gson();
     }
 
-    public ArrayList<Character> carregarEdicions() {
+    public ArrayList<Character> readCharacters() {
         ArrayList<Character> characters = new ArrayList<>();
         try {
             FileReader fr = new FileReader("Files/characters.json");
@@ -35,7 +34,7 @@ public class CharactersJsonDAO {
         }
 
     public Boolean findCharacter(String name){
-        ArrayList<Character> characters = carregarEdicions();
+        ArrayList<Character> characters = readCharacters();
         for (int i = 0; i < characters.size(); i++) {
             String output = characters.get(i).getName();
             if(name.equals(output)){
@@ -45,7 +44,7 @@ public class CharactersJsonDAO {
         return false;
     }
     public ArrayList<String> selectCharacters(String player){                  //Retorna tots els noms de personatge
-        ArrayList <Character> characters = carregarEdicions();
+        ArrayList <Character> characters = readCharacters();
         ArrayList<String> names = new ArrayList<>();
         if(!player.isEmpty()){
             for(int i=0; i<characters.size(); i++){
@@ -64,7 +63,7 @@ public class CharactersJsonDAO {
     }
 
     public void writeFile(Character character)throws IOException {
-        ArrayList<Character> characters = carregarEdicions();
+        ArrayList<Character> characters = readCharacters();
         characters.add(character);
         // escriu nou characters
         FileWriter fw = new FileWriter("Files/Characters.json");

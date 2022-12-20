@@ -17,25 +17,30 @@ public class CharacterManager {
     }
 
     public String changeName(String name){
-
+        //prova = CrisTINa maRTI puEYO
         String newName;
         char[] nameChr = name.toCharArray();
-        System.out.println("Primera lletra sense + 0  = " + nameChr[0]);
         if (nameChr[0] >= 'a' &&nameChr[0] <= 'z'){
             nameChr[0] = (char)(nameChr[0] - ' ');
         }
 
-        System.out.println("Primera lletra amb + 0  = " + nameChr[0]);
         for (int i = 0; i < name.length(); i ++){
-            if (nameChr[i] == ' ' && (i +1 != name.length())){
-                System.out.println("ENTRA 1 ");
+
+            if (nameChr[i] == ' ' && (i + 1 != name.length())){
                 if (nameChr[i + 1] >= 'a' &&nameChr[i + 1] <= 'z'){
-                    System.out.println("ENTRA 2 ");
                     nameChr[i + 1] = (char)(nameChr[i + 1] - ' ');
                 }
             }
+
+            //Comporvem si hi han maj ja que entemitg no poden haverhi
+            if (i != 0 && nameChr[i] >= 'A' && nameChr[i] <= 'Z' &&  nameChr[i - 1] != ' '){
+                nameChr[i] = (char)(nameChr[i] + ' ');
+
+            }
+
         }
         System.out.println("Nom original = " + name);
+
         newName = String.valueOf(nameChr);
         System.out.println("Nom retocat = " + newName);
 
