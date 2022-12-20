@@ -28,6 +28,7 @@ public class CharactersJsonDAO {
             //Fer switch segons tipus de character
 
         } catch (FileNotFoundException e) {
+            //!!!!!!!!!
             System.out.println("Error opening");
         }
         return characters;

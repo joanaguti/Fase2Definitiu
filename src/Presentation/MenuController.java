@@ -66,9 +66,11 @@ public class MenuController {
     private void createCharacters(){
         menu.showMessage("\nTavern keeper: “Oh, so you are new to this land.”\n“What’s your name?”");
         String name = menu.askForString("\n-> Enter your name: ");
-        Boolean contains = menu.checkSpecialChar(name);// CONTROLAR ESPAIS. SI S'ACCEPTEN ACCENTS TAMBE!
-        if(!contains){
+        //Boolean contains = menu.checkSpecialChar(name);// CONTROLAR ESPAIS. SI S'ACCEPTEN ACCENTS TAMBE!
+        int contains = 0;
+        if(contains == 0){
             //Modifica nom a manager (Upper i Lower exemple jOAnA = Joana)
+            String newName = cm.changeName(name);
             Boolean exists =  cm.characterExists(name);
             //Comprobem que no exixteixi el personatge.
             if(!exists){

@@ -15,23 +15,33 @@ public class CharacterManager {
         this.charJsonDAO = charJsonDAO;
         this.character = null;
     }
-/*
+
     public String changeName(String name){
+
         String newName;
-        char newLetter;
-        boolean first = false;
-        for(int i=0; i<name.length(); i++){
-            if(!first){
-                newLetter = newName.toUpperCase(name.charAt(i) == ' ');
-                first = true;
-            }else{
-                newLetter = Character.toLowerCase(name.charAt(i));
-            }
-            // newName = newName + newLetter;       //Como concateno un char i una cadena.
+        char[] nameChr = name.toCharArray();
+        System.out.println("Primera lletra sense + 0  = " + nameChr[0]);
+        if (nameChr[0] >= 'a' &&nameChr[0] <= 'z'){
+            nameChr[0] = (char)(nameChr[0] - ' ');
         }
 
+        System.out.println("Primera lletra amb + 0  = " + nameChr[0]);
+        for (int i = 0; i < name.length(); i ++){
+            if (nameChr[i] == ' ' && (i +1 != name.length())){
+                System.out.println("ENTRA 1 ");
+                if (nameChr[i + 1] >= 'a' &&nameChr[i + 1] <= 'z'){
+                    System.out.println("ENTRA 2 ");
+                    nameChr[i + 1] = (char)(nameChr[i + 1] - ' ');
+                }
+            }
+        }
+        System.out.println("Nom original = " + name);
+        newName = String.valueOf(nameChr);
+        System.out.println("Nom retocat = " + newName);
+
         return newName;
-    }*/
+    }
+
     public int generateStatistics(int num){
         int newNumber;
         // 1 i 2???
