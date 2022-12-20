@@ -117,7 +117,7 @@ public class MenuController {
         String player = menu.askForString("\n-> Enter the name of the Player to filter: ");
         ArrayList<String> names = cm.filterCharacters(player);
         menu.showList(names);
-        int index = menu.askNumberInARange("Who would you like to meet [0 .."+names.size()+"]", 1, names.size());
+        int index = menu.askNumberInARange("Who would you like to meet [0.."+names.size() +"]: ", 1, names.size());
         String nameCharacter = names.get(index-1);
         //agafar tota la informacio a partir del nom
         ArrayList<String> information= cm.getInformation(nameCharacter);
