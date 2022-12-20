@@ -71,4 +71,14 @@ public class CharactersJsonDAO {
         fw.close();
     }
 
+    public Character findInfCharacter(String name){
+        ArrayList<Character> characters = readCharacters();
+        for (int i = 0; i < characters.size(); i++) {
+            if(name.equals(name)){
+                return characters.get(i);
+            }
+        }
+        return null;
+    }
+
 }

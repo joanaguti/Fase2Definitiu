@@ -5,6 +5,7 @@ import Business.Entity.Monster;
 import Persistence.CharactersJsonDAO;
 import Persistence.MonstersJsonDAO;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CharacterManager {
@@ -23,24 +24,18 @@ public class CharacterManager {
         if (nameChr[0] >= 'a' &&nameChr[0] <= 'z'){
             nameChr[0] = (char)(nameChr[0] - ' ');
         }
-
         for (int i = 0; i < name.length(); i ++){
-
             if (nameChr[i] == ' ' && (i + 1 != name.length())){
                 if (nameChr[i + 1] >= 'a' &&nameChr[i + 1] <= 'z'){
                     nameChr[i + 1] = (char)(nameChr[i + 1] - ' ');
                 }
             }
-
             //Comporvem si hi han maj ja que entemitg no poden haverhi
             if (i != 0 && nameChr[i] >= 'A' && nameChr[i] <= 'Z' &&  nameChr[i - 1] != ' '){
                 nameChr[i] = (char)(nameChr[i] + ' ');
-
             }
-
         }
         System.out.println("Nom original = " + name);
-
         newName = String.valueOf(nameChr);
         System.out.println("Nom retocat = " + newName);
 
@@ -69,5 +64,23 @@ public class CharacterManager {
 
     public ArrayList<String> filterCharacters(String player){
         return charJsonDAO.selectCharacters(player);
+    }
+
+    public void addCharacter (String name, String player, int xp, int body, int mind, int spirit, String type) throws IOException {
+        Character character = new Character(name, player, xp, body, mind, spirit, type);
+            charJsonDAO.writeFile(character);
+    }
+
+    public ArrayList<String> getInformation(String name){
+        Character character = charJsonDAO.findInfCharacter(name);
+        ArrayList<String> information = new ArrayList<>();
+        information.add(character.getName());
+        information.add(character.getPlayer());
+        information.add(String.valueOf(character.getXp()));
+        information.add(String.valueOf(character.getBody()));
+        information.add(String.valueOf(character.getMind()));
+        information.add(String.valueOf(character.getSpirit()));
+
+        return information;
     }
 }

@@ -98,5 +98,17 @@ public class MenuView {
         }
         System.out.println("\n0. Back");
     }
+    public void showInformationCharacter (ArrayList<String> information){
+        System.out.println("* Name:   "+ information.get(0));
+
+
+             /*   "* Player: IPlayLOLInClass"+ information.get(1) +"\n" +
+                "* Class:  Adventurer"+ information.get(2) +"\n" +
+                "* Level:  2"+ information.get(3) +"\n" +
+                "* XP:     132"+ information.get(4) +"\n" +
+                "* Body:   +1"+ information.get(5) +"\n" +
+                "* Mind:   -1"+ information.get(6) +"\n" +
+                "* Spirit: +3"+ information.get(7));*/
+    }
 }
 

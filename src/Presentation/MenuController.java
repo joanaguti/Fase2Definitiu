@@ -8,6 +8,7 @@ import Business.Entity.Monster;
 import Business.PlayManager;
 import Presentation.Views.MenuView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -27,7 +28,7 @@ public class MenuController {
         this.dice = dice;
     }
 
-    private void executeOption(int option) {
+    private void executeOption(int option) throws IOException {
         switch (option) {
             case 1:
                 createCharacters();
@@ -49,7 +50,7 @@ public class MenuController {
         }
     }
 
-    public void run() {
+    public void run() throws IOException {
         int option;
         menu.showMainMessage();
 
@@ -63,13 +64,11 @@ public class MenuController {
         menu.showMessage("\nTavern keeper: “Are you leaving already? See you soon, adventurer.”");
     }
 
-    private void createCharacters(){
+    private void createCharacters() throws IOException {
         menu.showMessage("\nTavern keeper: “Oh, so you are new to this land.”\n“What’s your name?”");
         String name = menu.askForString("\n-> Enter your name: ");
-        Boolean contains = menu.checkSpecialChar(name);// CONTROLAR ESPAIS. SI S'ACCEPTEN ACCENTS TAMBE!
-        //int contains = 0;
+        Boolean contains = menu.checkSpecialChar(name);
         if(!contains){
-            //Modifica nom a manager (Upper i Lower exemple jOAnA = Joana)
             String newName = cm.changeName(name);
             Boolean exists =  cm.characterExists(name);
             //Comprobem que no exixteixi el personatge.
@@ -103,8 +102,9 @@ public class MenuController {
                         "  - Mind: "+ mindSt +"\n" +
                         "  - Spirit: "+ spiritSt +"");
                 //Afegeix al Json el personatge amb info.
-                String classe = "Adventurer";       //Fer una classe d'aquest tipus de personatges??
                 menu.showMessage("\nThe new character "+name+" has been created.");
+                //Es fa be el add, ho comentem per no acomular proves al fitxer
+                //cm.addCharacter(newName, playerName, level, body, mind, spirit, "Adventure");
             }else{
                 menu.showMessage("\nCharacter already exists");
             }
@@ -117,17 +117,13 @@ public class MenuController {
         String player = menu.askForString("\n-> Enter the name of the Player to filter: ");
         ArrayList<String> names = cm.filterCharacters(player);
         menu.showList(names);
-        int index = menu.askNumberInARange("", 0, names.size());
+        int index = menu.askNumberInARange("Who would you like to meet [0 .."+names.size()+"]", 1, names.size());
+        String nameCharacter = names.get(index-1);
+        //agafar tota la informacio a partir del nom
+        ArrayList<String> information= cm.getInformation(nameCharacter);
         menu.showMessage("Tavern keeper: “Hey Jinx get here; the boss wants to see you!”");     //Change Jinx per nom i elements per return
         //busca personatje per nom (DAO o manager)
-        menu.showMessage("* Name:   Jinx\n" +
-                "* Player: IPlayLOLInClass\n" +
-                "* Class:  Adventurer\n" +
-                "* Level:  2\n" +
-                "* XP:     132\n" +
-                "* Body:   +1\n" +
-                "* Mind:   -1\n" +
-                "* Spirit: +3");
+        menu.showInformationCharacter(cm.getInformation(nameCharacter));
         menu.showMessage("[Enter name to delete, or press enter to cancel]");
         String nameDel = menu.askForString("Do you want to delete Jinx?");      //Change name
         // COntrolar error en el nom pag 4.
@@ -207,6 +203,5 @@ public class MenuController {
     }
 
     private void stopProgram(){
-
     }
 }
