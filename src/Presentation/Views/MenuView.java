@@ -94,21 +94,35 @@ public class MenuView {
         System.out.println("\nYou watch as some adventurers get up from their chairs and approach you.\n");
         for(int i=0; i<list.size(); i++){
             String output = list.get(i);
-            System.out.println(i+1+". "+output);
+            System.out.println("\t"+(i+1)+". "+output);
         }
         System.out.println("\n0. Back");
     }
     public void showInformationCharacter (ArrayList<String> information){
-        System.out.println("* Name:   "+ information.get(0));
+        System.out.println("\t* Name:     "+ information.get(0));
+        System.out.println("\t* Player:   "+ information.get(1));
+        System.out.println("\t* Class:    Adventure");
+        System.out.println("\t* Level:    X COMRPOBAR");
+        System.out.println("\t* XP:       "+ information.get(2));
+        int aux = Integer.parseInt(information.get(3));
+        if (aux < 0) {
+            System.out.println("\t* Body:     "+ information.get(3));
+        } else{
+            System.out.println("\t* Body:     +"+ information.get(3));
+        }
+        aux = Integer.parseInt(information.get(4));
+        if (aux < 0) {
+            System.out.println("\t* Mind:     "+ information.get(4));
+        } else{
+            System.out.println("\t* Mind:     +"+ information.get(4));
+        }
+        aux = Integer.parseInt(information.get(5));
+        if (aux < 0) {
+            System.out.println("\t* Spirit:   "+ information.get(5));
+        } else{
+            System.out.println("\t* Spirit:   +"+ information.get(5));
+        }
 
-
-             /*   "* Player: IPlayLOLInClass"+ information.get(1) +"\n" +
-                "* Class:  Adventurer"+ information.get(2) +"\n" +
-                "* Level:  2"+ information.get(3) +"\n" +
-                "* XP:     132"+ information.get(4) +"\n" +
-                "* Body:   +1"+ information.get(5) +"\n" +
-                "* Mind:   -1"+ information.get(6) +"\n" +
-                "* Spirit: +3"+ information.get(7));*/
     }
 }
 

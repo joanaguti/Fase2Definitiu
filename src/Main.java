@@ -8,13 +8,12 @@ import Persistence.MonstersJsonDAO;
 import Presentation.MenuController;
 import Presentation.Views.MenuView;
 
-import java.io.FileNotFoundException;
-
 public class Main {
     public static void main(String[] args) {
         MenuView menu = new MenuView();
         try{
             CharactersJsonDAO charJsonDAO = new CharactersJsonDAO();
+            //abans hi havia gson entre (), ho he tret.
             AdventuresJsonDAO advJsonDAO = new AdventuresJsonDAO();
             Dice dice = new Dice();
 

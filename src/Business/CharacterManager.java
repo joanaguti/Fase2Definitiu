@@ -1,9 +1,7 @@
 package Business;
 
 import Business.Entity.Character;
-import Business.Entity.Monster;
 import Persistence.CharactersJsonDAO;
-import Persistence.MonstersJsonDAO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,7 +66,7 @@ public class CharacterManager {
 
     public void addCharacter (String name, String player, int xp, int body, int mind, int spirit, String type) throws IOException {
         Character character = new Character(name, player, xp, body, mind, spirit, type);
-            charJsonDAO.writeFile(character);
+        charJsonDAO.writeFileOneChr(character);
     }
 
     public ArrayList<String> getInformation(String name){
@@ -82,5 +80,9 @@ public class CharacterManager {
         information.add(String.valueOf(character.getSpirit()));
 
         return information;
+    }
+
+    public void removeCharacter(String name) throws IOException {
+        charJsonDAO.removeCharacterFile(name);
     }
 }

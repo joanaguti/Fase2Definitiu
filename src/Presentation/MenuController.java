@@ -112,20 +112,27 @@ public class MenuController {
 
     }
 
-    private void listCharacters(){
+    private void listCharacters() throws IOException {
         menu.showMessage("\nTavern keeper: “Lads! They want to see you!”\n“Who piques your interest?”");
         String player = menu.askForString("\n-> Enter the name of the Player to filter: ");
         ArrayList<String> names = cm.filterCharacters(player);
+        //SI NO EXITEIX QUE PASA?
         menu.showList(names);
-        int index = menu.askNumberInARange("Who would you like to meet [0.."+names.size() +"]: ", 1, names.size());
+        int index = menu.askNumberInARange("\nWho would you like to meet [0.." + names.size() +"]: ", 1, names.size());
         String nameCharacter = names.get(index-1);
         //agafar tota la informacio a partir del nom
         ArrayList<String> information= cm.getInformation(nameCharacter);
-        menu.showMessage("Tavern keeper: “Hey Jinx get here; the boss wants to see you!”");     //Change Jinx per nom i elements per return
+        menu.showMessage("\nTavern keeper: “Hey " + nameCharacter+ "get here; the boss wants to see you!”\n");     //Change Jinx per nom i elements per return
         //busca personatje per nom (DAO o manager)
         menu.showInformationCharacter(cm.getInformation(nameCharacter));
-        menu.showMessage("[Enter name to delete, or press enter to cancel]");
-        String nameDel = menu.askForString("Do you want to delete Jinx?");      //Change name
+        menu.showMessage("\n[Enter name to delete, or press enter to cancel]");
+        String nameDel = menu.askForString("Do you want to delete " + nameCharacter + "? ");      //Change name
+        if (nameDel.equals(nameCharacter)){
+            cm.removeCharacter(nameDel);
+            //KIDDO ns si es el nom del ususari o que coll es
+            menu.showMessage("\nI'm sorry kiddo, but you have to leave.");
+            menu.showMessage("\nCharacter " + nameCharacter + "left the Guild.");
+        }
         // COntrolar error en el nom pag 4.
         // Busca pel nom i return false -> misatge derrror -> no l'intento esborrar
         // Boolean delate = cm.deleteCharacter(nameDel);
@@ -134,12 +141,10 @@ public class MenuController {
                     "Character Jinx left the Guild.");                                          // Change Name
         }*/
 
-
-
     }
 
     private void createAdventure(){
-        menu.showMessage("Tavern keeper: “Planning an adventure? Good luck with that!”\n");
+        menu.showMessage("\nTavern keeper: “Planning an adventure? Good luck with that!”\n");
         String newAdventure = menu.askForString("-> Name your adventure: ");
 
         Boolean check = am.existeixAventura(newAdventure);

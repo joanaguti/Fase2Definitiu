@@ -62,9 +62,16 @@ public class CharactersJsonDAO {
         return names;
     }
 
-    public void writeFile(Character character)throws IOException {
+    public void writeFileOneChr(Character character)throws IOException {
         ArrayList<Character> characters = readCharacters();
         characters.add(character);
+        // escriu nou characters
+        FileWriter fw = new FileWriter("Files/Characters.json");
+        gson.toJson(characters, fw);
+        fw.close();
+    }
+
+    public void writeFileAllChr(ArrayList<Character> characters)throws IOException {
         // escriu nou characters
         FileWriter fw = new FileWriter("Files/Characters.json");
         gson.toJson(characters, fw);
@@ -74,11 +81,24 @@ public class CharactersJsonDAO {
     public Character findInfCharacter(String name){
         ArrayList<Character> characters = readCharacters();
         for (int i = 0; i < characters.size(); i++) {
-            if(name.equals(name)){
+            if(name.equals(characters.get(i).getName())){
                 return characters.get(i);
             }
         }
+
         return null;
+    }
+
+    public void removeCharacterFile (String name) throws IOException {
+        ArrayList<Character> characters = readCharacters();
+        for (int i = 0; i < characters.size(); i++) {
+            if(name.equals(characters.get(i).getName())){
+                characters.remove(i);
+            }
+        }
+        //tornar a escriure tot al fitxer ja que es consultiu
+        writeFileAllChr(characters);
+
     }
 
 }
