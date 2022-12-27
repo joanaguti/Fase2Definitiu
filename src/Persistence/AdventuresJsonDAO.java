@@ -5,10 +5,7 @@ import Business.Entity.Character;
 import com.google.gson.Gson;
 import com.google.gson.*;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +15,10 @@ public class AdventuresJsonDAO {
 
     public AdventuresJsonDAO() {
         this.gson = new Gson();
+    }
+
+    public void createFile(){
+        File file = new File ("Files","adventures.json");
     }
 
     public ArrayList<Adventure> readAdventures() {

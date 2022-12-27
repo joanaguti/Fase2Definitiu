@@ -29,4 +29,10 @@ public class AdventureManager {
         //DAO retorni boolean si el troba
         return false;
     }
+    public ArrayList<String> getAdventureMonsters(String name){
+        return advJsonDAO.getAllMonsters(name);
+    }
+    public void createPersistenceSource(){
+        advJsonDAO.createFile();
+    }
 }

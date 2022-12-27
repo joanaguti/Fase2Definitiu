@@ -1,5 +1,6 @@
 package Presentation.Views;
 
+import java.lang.reflect.Array;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -147,6 +148,40 @@ public class MenuView {
             String type = monstTypes.get(j);
             System.out.println(j+1+". "+name+" ("+type+")");
         }
+    }
+    public void showMonstAdvList(ArrayList<String> names){
+        if(names.size() != 0){
+            for(int i=0; i<names.size(); i++){
+                System.out.println((i+1)+ ". "+names.get(i)+ "(x2AÑADIR CANTIDAD)");
+            }
+        }else{
+            System.out.println("#Empty");
+        }
+    }
+    public int askNumberInARangeThreeTimes(String message, int min, int max){
+        int numTimes =0;
+        do {
+            System.out.print(message);
+            String evaluate = scanner.nextLine();
+            try {
+                int num = Integer.parseInt(evaluate);
+                if (num < min || num > max) {
+                    if(numTimes<2){
+                        System.out.println("\nWrong number try again.\n");
+                    }else{
+                        System.out.println("\nERROR: Wrong number.\n");
+                    }
+                    numTimes++;
+                } else {
+                    numTimes=3;
+                    return num;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\nWrong number try again.\n");
+                numTimes++;
+            }
+        } while (numTimes<3);
+        return 0;
     }
 }
 
