@@ -78,17 +78,6 @@ public class MenuController {
                 int level = menu.askNumberInARange("\n-> Enter the character’s level [1..10]: ", 1, 10);
                 menu.showMessage("\nTavern keeper: “Oh, so you are level "+ level +"!”");
                 menu.showMessage("“Great, let me get a closer look at you...”");
-                /*
-                int bodyA = dice.rollDice(6, 1);
-                int bodyB = dice.rollDice(6, 1);
-                int mindA = dice.rollDice(6, 1);
-                int mindB = dice.rollDice(6, 1);
-                int spiritA = dice.rollDice(6, 1);
-                int spiritB = dice.rollDice(6, 1);
-                int body = bodyA + bodyB;
-                int mind = mindA + mindB;
-                int spirit = spiritA + spiritB;
-                 */
                 int bodyA = cm.getRandom();
                 int bodyB = cm.getRandom();
                 int mindA = cm.getRandom();
@@ -124,30 +113,37 @@ public class MenuController {
         menu.showMessage("\nTavern keeper: “Lads! They want to see you!”\n“Who piques your interest?”");
         String player = menu.askForString("\n-> Enter the name of the Player to filter: ");
         ArrayList<String> names = cm.filterCharacters(player);
-        //SI NO EXITEIX QUE PASA?
-        menu.showList(names);
-        int index = menu.askNumberInARange("\nWho would you like to meet [0.." + names.size() +"]: ", 1, names.size());
-        String nameCharacter = names.get(index-1);
-        //agafar tota la informacio a partir del nom
-        ArrayList<String> information= cm.getInformation(nameCharacter);
-        menu.showMessage("\nTavern keeper: “Hey " + nameCharacter+ "get here; the boss wants to see you!”\n");     //Change Jinx per nom i elements per return
-        //busca personatje per nom (DAO o manager)
-        menu.showInformationCharacter(cm.getInformation(nameCharacter));
-        menu.showMessage("\n[Enter name to delete, or press enter to cancel]");
-        String nameDel = menu.askForString("Do you want to delete " + nameCharacter + "? ");      //Change name
-        if (nameDel.equals(nameCharacter)){
-            cm.removeCharacter(nameDel);
-            //KIDDO ns si es el nom del ususari o que coll es
-            menu.showMessage("\nI'm sorry kiddo, but you have to leave.");
-            menu.showMessage("\nCharacter " + nameCharacter + "left the Guild.");
+        // Comprobamos si el jugador tiene personajes.
+        if(names.size() != 0){
+            menu.showList(names);
+            int index = menu.askNumberInARangeOneTime("\nWho would you like to meet [0.." + names.size() +"]: ", 1, names.size());
+            if(names.size() >= index){
+                String nameCharacter = names.get(index-1);
+                //agafar tota la informacio a partir del nom
+                ArrayList<String> information= cm.getInformation(nameCharacter);
+                menu.showMessage("\nTavern keeper: “Hey " + nameCharacter+ "get here; the boss wants to see you!”\n");     //Change Jinx per nom i elements per return
+                //busca personatje per nom (DAO o manager)
+                menu.showInformationCharacter(cm.getInformation(nameCharacter));
+                Boolean delate = false;
+                do{
+                    menu.showMessage("\n[Enter name to delete, or press enter to cancel]");
+                    String nameDel = menu.askForString("Do you want to delete " + nameCharacter + "? ");      //Change name
+                    if (nameDel.equals(nameCharacter)){
+                        cm.removeCharacter(nameDel);
+                        //KIDDO ns si es el nom del ususari o que coll es
+                        menu.showMessage("\nI'm sorry kiddo, but you have to leave.");
+                        menu.showMessage("\nCharacter " + nameCharacter + "left the Guild.");
+                        delate = true;
+                    }else if(nameDel.isEmpty()){
+                        delate = true;
+                    }else{
+                        menu.showMessage("\nERROR: Character not found, try again.");
+                    }
+                }while(!delate);
+            }
+        }else{
+            menu.showMessage("\nERROR: Characters not found");
         }
-        // COntrolar error en el nom pag 4.
-        // Busca pel nom i return false -> misatge derrror -> no l'intento esborrar
-        // Boolean delate = cm.deleteCharacter(nameDel);
-        /*if(delate){
-            menu.showMessage("Tavern keeper: “I’m sorry kiddo, but you have to leave.”\n" +
-                    "Character Jinx left the Guild.");                                          // Change Name
-        }*/
 
     }
 

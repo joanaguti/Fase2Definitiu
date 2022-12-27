@@ -90,6 +90,23 @@ public class MenuView {
             }
         } while (true);
     }
+    public int askNumberInARangeOneTime(String message, int min, int max){
+        System.out.print(message);
+        String evaluate = scanner.nextLine();
+        int num;
+        try {
+            num = Integer.parseInt(evaluate);
+            if (num < min || num > max) {
+                System.out.println("\nERROR: Character not found");
+            } else {
+                return num;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("\nERROR: Character not found");
+            num = 0;
+        }
+        return num;
+    }
     public void showList(ArrayList<String> list){
         System.out.println("\nYou watch as some adventurers get up from their chairs and approach you.\n");
         for(int i=0; i<list.size(); i++){
