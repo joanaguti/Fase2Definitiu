@@ -10,4 +10,12 @@ public class Adventure {
         this.adventureName = adventureName;
         this.fightList = fightList;
     }
+
+    public String getAdventureName() {
+        return adventureName;
+    }
+
+    public ArrayList<Fight> getFightList() {
+        return fightList;
+    }
 }

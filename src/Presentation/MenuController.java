@@ -150,36 +150,33 @@ public class MenuController {
     private void createAdventure(){
         menu.showMessage("\nTavern keeper: “Planning an adventure? Good luck with that!”\n");
         String newAdventure = menu.askForString("-> Name your adventure: ");
-
         Boolean check = am.existeixAventura(newAdventure);
         if(!check) {
-            menu.showMessage("Tavern keeper: “You plan to undertake Strolling through Mordor, really?”\n" +
+            menu.showMessage("\nTavern keeper: “You plan to undertake "+newAdventure+", really?”\n" +
                     "“How long will that take?”\n");
             int numFights = menu.askNumberInARange("-> How many encounters do you want [1..4]:", 1, 4);
             menu.showMessage("Tavern keeper: “"+ numFights +" encounters? That is too much for me...”");
             // Per cada combat de l'aventura demanem info.
             for(int i=0; i<numFights; i++) {
-                menu.showMessage("* Encounter " + i + " / " + numFights + "\n" +
+                menu.showMessage("\n\n* Encounter " + (i+1) + " / " + numFights + "\n" +
                         "* Monsters in encounter");
 
                 //LLegir monstres aventura o si esta empty mostro empty
-                menu.showMessage("1. Add monster\n" +
+                menu.showMessage("\n1. Add monster\n" +
                         "2. Remove monster\n" +
                         "3. Continue");
-                int option = menu.askNumberInARange("-> Enter an option [1..3]: ", 1,3);
+                int option = menu.askNumberInARange("\n-> Enter an option [1..3]: ", 1,3);
 
                 switch (option){
                     case 1:
+                        // 1. Afegir monstres
                         //Mostra tots els monstres possibles (fitxer)
                         ArrayList<String> monstNames =  am.getAllMonstersName();
                         ArrayList<String> monstTypes =  am.getAllMonstersType();
-                        for(int j=0; j<monstNames.size();j++){
-                            String name = monstNames.get(j);
-                            String type = monstTypes.get(j);
-                            menu.showMessage(j+1+". "+name+"("+type+")");
-                        }
+                        menu.showMonstersList(monstNames, monstTypes);
 
-                        int indexAdd = menu.askNumberInARange("-> Choose a monster to add [1.."+monstNames.size()+"]: ", 1, monstNames.size());   //Posar num max de llista.
+
+                        int indexAdd = menu.askNumberInARange("\n-> Choose a monster to add [1.."+monstNames.size()+"]: ", 1, monstNames.size());   //Posar num max de llista.
                         int amount = menu.askForInteger("-> How many NOM MONSTRE (s) do you want to add:"); //Afegir nom monstre
                         //Afegir monstre/s
                         // 1. Add monster (del combat concret, arrayList de monstres de dins de fight, dins del tipo de monstre altre classe).
@@ -187,11 +184,11 @@ public class MenuController {
                         // creo funcio Show monsters i li paso ArrayList? o faig bucle aqui???
                         break;
                     case 2:
-
+                        // 2. Remove monster
                         int indexDel = menu.askForInteger("-> Which monster do you want to delete: ");
                         // amb l'index busca el monstre i elimina -> advManager -> monst dins de fight.
                         menu.showMessage("9 Nazgul were removed from the encounter."); //change name i num de monstres
-                        // 2. Remove monster
+
                         break;
                     case 3:
                         // 3. Continue

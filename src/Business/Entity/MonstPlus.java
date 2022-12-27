@@ -1,24 +1,20 @@
 package Business.Entity;
 
 public class MonstPlus {
-    private String name;
+    private Monster monster;
     private int num;
 
-    public MonstPlus(String name, int num) {
-        this.name = name;
+    public MonstPlus(Monster monster, int num) {
+        this.monster = monster;
         this.num = num;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getNum() {
         return num;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Monster getMonster() {
+        return monster;
     }
 
     public void setNum(int num) {

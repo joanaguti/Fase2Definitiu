@@ -49,7 +49,7 @@ public class CharactersJsonDAO {
         if(!player.isEmpty()){
             for(int i=0; i<characters.size(); i++){
                 Character character = characters.get(i);
-                if(player.equals(character.getPlayer())){
+                if(player.equals(character.getPlayer())){   //Un trozo tambien sirve
                     names.add(character.getName());
                 }
             }

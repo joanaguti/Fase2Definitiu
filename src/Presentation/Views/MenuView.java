@@ -141,5 +141,12 @@ public class MenuView {
         }
 
     }
+    public void showMonstersList(ArrayList<String> monstNames, ArrayList<String> monstTypes){
+        for(int j=0; j<monstNames.size();j++){
+            String name = monstNames.get(j);
+            String type = monstTypes.get(j);
+            System.out.println(j+1+". "+name+" ("+type+")");
+        }
+    }
 }
 
