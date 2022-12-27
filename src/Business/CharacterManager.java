@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class CharacterManager {
     private CharactersJsonDAO charJsonDAO;
     private Character character;
+    private DiceRoller dice;
 
     public CharacterManager(CharactersJsonDAO charJsonDAO) {
         this.charJsonDAO = charJsonDAO;
@@ -84,5 +85,12 @@ public class CharacterManager {
 
     public void removeCharacter(String name) throws IOException {
         charJsonDAO.removeCharacterFile(name);
+    }
+
+    public int getRandom(){
+        return dice.rollDice(6, 1);
+    }
+    public int getStatistic(int a,int b){
+        return a+b;
     }
 }

@@ -2,7 +2,6 @@ package Presentation;
 
 import Business.AdventureManager;
 import Business.CharacterManager;
-import Business.Dice;
 import Business.Entity.Character;
 import Business.Entity.Monster;
 import Business.PlayManager;
@@ -17,15 +16,13 @@ public class MenuController {
     private CharacterManager cm;
     private AdventureManager am;
     private PlayManager pm;
-    private Dice dice;
 
 
-    public MenuController(MenuView menu, CharacterManager cm, AdventureManager am, PlayManager pm, Dice dice) {
+    public MenuController(MenuView menu, CharacterManager cm, AdventureManager am, PlayManager pm) {
         this.menu = menu;
         this.cm = cm;
         this.am = am;
         this.pm = pm;
-        this.dice = dice;
     }
 
     private void executeOption(int option) throws IOException {
@@ -81,6 +78,7 @@ public class MenuController {
                 int level = menu.askNumberInARange("\n-> Enter the character’s level [1..10]: ", 1, 10);
                 menu.showMessage("\nTavern keeper: “Oh, so you are level "+ level +"!”");
                 menu.showMessage("“Great, let me get a closer look at you...”");
+                /*
                 int bodyA = dice.rollDice(6, 1);
                 int bodyB = dice.rollDice(6, 1);
                 int mindA = dice.rollDice(6, 1);
@@ -90,6 +88,16 @@ public class MenuController {
                 int body = bodyA + bodyB;
                 int mind = mindA + mindB;
                 int spirit = spiritA + spiritB;
+                 */
+                int bodyA = cm.getRandom();
+                int bodyB = cm.getRandom();
+                int mindA = cm.getRandom();
+                int mindB = cm.getRandom();
+                int spiritA = cm.getRandom();
+                int spiritB = cm.getRandom();
+                int body = cm.getStatistic(bodyA, bodyB);
+                int mind = cm.getStatistic(mindA, mindB);
+                int spirit = cm.getStatistic(spiritA, spiritB);
                 menu.showMessage("\nGenerating your stats...");
                 menu.showMessage("\nBody:   You rolled "+ body +" ("+ bodyA +" and "+ bodyB +").\n" +
                         "Mind:   You rolled  "+ mind +" ("+ mindA +" and "+ mindB +").\n" +

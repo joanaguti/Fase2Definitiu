@@ -1,9 +1,9 @@
 package Business;
 
-public class Dice {
+public class DiceRoller {
     private int num;
 
-    public Dice() {
+    public DiceRoller() {
     }
 
     public int rollDice(int max, int min) {
