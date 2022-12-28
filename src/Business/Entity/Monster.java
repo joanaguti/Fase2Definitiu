@@ -29,4 +29,32 @@ public class Monster {
     public String getChallenge() {
         return challenge;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setChallenge(String challenge) {
+        this.challenge = challenge;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public void setHitPoints(int hitPoints) {
+        this.hitPoints = hitPoints;
+    }
+
+    public void setInitiative(int initiative) {
+        this.initiative = initiative;
+    }
+
+    public void setDamageDice(String damageDice) {
+        this.damageDice = damageDice;
+    }
+
+    public void setDamageType(String damageType) {
+        this.damageType = damageType;
+    }
 }

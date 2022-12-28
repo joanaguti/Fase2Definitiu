@@ -18,4 +18,12 @@ public class Adventure {
     public ArrayList<Fight> getFightList() {
         return fightList;
     }
+
+    public void setAdventureName(String adventureName) {
+        this.adventureName = adventureName;
+    }
+
+    public void setFightList(ArrayList<Fight> fightList) {
+        this.fightList = fightList;
+    }
 }

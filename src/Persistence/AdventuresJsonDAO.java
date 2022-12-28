@@ -17,10 +17,6 @@ public class AdventuresJsonDAO {
         this.gson = new Gson();
     }
 
-    public void createFile(){
-        File file = new File ("Files","adventures.json");
-    }
-
     public ArrayList<Adventure> readAdventures() {
         ArrayList<Adventure> adventures = new ArrayList<>();
         try {
@@ -40,7 +36,7 @@ public class AdventuresJsonDAO {
         for (int i = 0; i < adventures.size(); i++) {
             if(name.equals(adventures.get(i).getAdventureName())){
                 ArrayList<Fight> fights = adventures.get(i).getFightList();
-                for(int j = 0; i<fights.size(); j++){
+                for(int j = 0; j<fights.size(); j++){
                     ArrayList<MonstPlus> monstersPlus = fights.get(j).getMonsters();
                     for(int k=0; k<monstersPlus.size(); k++){
                         Monster monsters = monstersPlus.get(i).getMonster();
@@ -51,14 +47,33 @@ public class AdventuresJsonDAO {
         }
         return names;
     }
+    public void PROVAJOANA(Adventure adventure) throws IOException {
+        ArrayList<Adventure> adventures = new ArrayList<>();
+        adventures.add(adventure);
+        // escriu
+        FileWriter fw = new FileWriter("Files/adventures.json");
+        gson.toJson(adventures, fw);
+        fw.close();
+    }
 
     public void writeFileOneAdv(Adventure adventure)throws IOException {
         ArrayList<Adventure> adventures = readAdventures();
         adventures.add(adventure);
         // escriu nou characters
-        FileWriter fw = new FileWriter("Files/Characters.json");
+        FileWriter fw = new FileWriter("Files/adventures.json");
         gson.toJson(adventures, fw);
         fw.close();
+    }
+
+    public Boolean findAdventure(String name){
+        ArrayList<Adventure> adventures = readAdventures();
+        for (int i = 0; i < adventures.size(); i++) {
+            String output = adventures.get(i).getAdventureName();
+            if(name.equals(output)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

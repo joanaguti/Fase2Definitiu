@@ -2,8 +2,8 @@ package Presentation;
 
 import Business.AdventureManager;
 import Business.CharacterManager;
+import Business.Entity.*;
 import Business.Entity.Character;
-import Business.Entity.Monster;
 import Business.PlayManager;
 import Presentation.Views.MenuView;
 
@@ -147,11 +147,31 @@ public class MenuController {
 
     }
 
-    private void createAdventure(){
-        am.createPersistenceSource();
+    private void createAdventure() throws IOException {
         menu.showMessage("\nTavern keeper: “Planning an adventure? Good luck with that!”\n");
         String newAdventure = menu.askForString("-> Name your adventure: ");
-        Boolean check = am.existeixAventura(newAdventure);
+        Boolean check = false;
+                //am.adventureExists(newAdventure);
+
+/*
+                Monster monssterAllInfo = null;
+                monssterAllInfo.setName("Monster1");
+                monssterAllInfo.setChallenge("Challe");
+                monssterAllInfo.setDamageDice("sdfg");
+                monssterAllInfo.setExperience(12);
+                monssterAllInfo.setDamageType("Rype");
+                monssterAllInfo.setHitPoints(11);
+                monssterAllInfo.setInitiative(1);
+                MonstPlus monPlus = new MonstPlus(monssterAllInfo, 4);
+                ArrayList<MonstPlus> mm = new ArrayList<>();
+                mm.add(monPlus);
+                Fight fight = new Fight(mm);
+                ArrayList<Fight> fights = new ArrayList<>();
+                fights.add(fight);
+                Adventure adv = new Adventure("Joana Gutierrez", fights);
+                am.PROVAJOANA2(adv);
+
+ */
         if(!check) {
             menu.showMessage("\nTavern keeper: “You plan to undertake "+newAdventure+", really?”\n" +
                     "“How long will that take?”\n");
@@ -179,9 +199,9 @@ public class MenuController {
                             ArrayList<String> monstTypes =  am.getAllMonstersType();
                             menu.showMonstersList(monstNames, monstTypes);
 
-
                             int indexAdd = menu.askNumberInARange("\n-> Choose a monster to add [1.."+monstNames.size()+"]: ", 1, monstNames.size());   //Posar num max de llista.
                             int amount = menu.askForInteger("-> How many NOM MONSTRE (s) do you want to add:"); //Afegir nom monstre
+
                             //Afegir monstre/s
                             // 1. Add monster (del combat concret, arrayList de monstres de dins de fight, dins del tipo de monstre altre classe).
                             // A aventuraManager fer addMonster, i que faci actualitza num monstres amb el nom, a classe Fight.

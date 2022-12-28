@@ -17,6 +17,10 @@ public class MonstPlus {
         return monster;
     }
 
+    public void setMonster(Monster monster) {
+        this.monster = monster;
+    }
+
     public void setNum(int num) {
         this.num = num;
     }

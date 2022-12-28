@@ -23,8 +23,8 @@ public class Main {
             PlayManager pm = new PlayManager();
             MenuController mc = new MenuController(menu, cm, am, pm);
             mc.run();
-        }catch(Exception ex){   //Filenotfoud exepcion connectar daos
-            menu.showMessage("Error: The monsters.json file can’t be accessed.");   //monsters o caracters
+        }catch(Exception ex){
+            menu.showMessage("ERROR GENERAL MAIN");
         }
 
     }
