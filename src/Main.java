@@ -24,7 +24,7 @@ public class Main {
             MenuController mc = new MenuController(menu, cm, am, pm);
             mc.run();
         }catch(Exception ex){
-            menu.showMessage("ERROR GENERAL MAIN");
+            menu.showMessage("ERROR GENERAL MAIN JOANA");
         }
 
     }
