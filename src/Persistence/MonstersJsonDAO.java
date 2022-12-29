@@ -48,5 +48,9 @@ public class MonstersJsonDAO {
         }
         return types;
     }
+    public Monster readOneMonster(int index){
+        ArrayList<Monster> monsters = readFile();
+        return monsters.get(index);
+    }
 
 }

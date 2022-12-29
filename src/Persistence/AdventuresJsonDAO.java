@@ -48,7 +48,7 @@ public class AdventuresJsonDAO {
         return names;
     }
     public void PROVAJOANA(Adventure adventure) throws IOException {
-        ArrayList<Adventure> adventures = new ArrayList<>();
+        ArrayList<Adventure> adventures = readAdventures();
         adventures.add(adventure);
         // escriu
         FileWriter fw = new FileWriter("Files/adventures.json");

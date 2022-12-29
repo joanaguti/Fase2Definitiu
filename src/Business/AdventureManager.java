@@ -1,6 +1,7 @@
 package Business;
 
 import Business.Entity.Adventure;
+import Business.Entity.Character;
 import Business.Entity.Monster;
 import Persistence.AdventuresJsonDAO;
 import Persistence.CharactersJsonDAO;

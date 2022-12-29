@@ -57,4 +57,28 @@ public class Monster {
     public void setDamageType(String damageType) {
         this.damageType = damageType;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public int getHitPoints() {
+        return hitPoints;
+    }
+
+    public int getInitiative() {
+        return initiative;
+    }
+
+    public String getDamageDice() {
+        return damageDice;
+    }
+
+    public String getDamageType() {
+        return damageType;
+    }
 }

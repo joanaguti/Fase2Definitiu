@@ -150,28 +150,24 @@ public class MenuController {
     private void createAdventure() throws IOException {
         menu.showMessage("\nTavern keeper: “Planning an adventure? Good luck with that!”\n");
         String newAdventure = menu.askForString("-> Name your adventure: ");
-        Boolean check = false;
-                //am.adventureExists(newAdventure);
+        Boolean check = false; //am.adventureExists(newAdventure);
 
-/*
-                Monster monssterAllInfo = null;
-                monssterAllInfo.setName("Monster1");
-                monssterAllInfo.setChallenge("Challe");
-                monssterAllInfo.setDamageDice("sdfg");
-                monssterAllInfo.setExperience(12);
-                monssterAllInfo.setDamageType("Rype");
-                monssterAllInfo.setHitPoints(11);
-                monssterAllInfo.setInitiative(1);
-                MonstPlus monPlus = new MonstPlus(monssterAllInfo, 4);
-                ArrayList<MonstPlus> mm = new ArrayList<>();
-                mm.add(monPlus);
-                Fight fight = new Fight(mm);
-                ArrayList<Fight> fights = new ArrayList<>();
-                fights.add(fight);
-                Adventure adv = new Adventure("Joana Gutierrez", fights);
-                am.PROVAJOANA2(adv);
+        Monster monsterAllInfo = new Monster("Gothmog", "Boss", 148,87 , 3, "d20", "Magical");
+        Monster monsterAllInfo2 = new Monster("Cris", "challege2", 2,3 , 3, "dice2", "type2");
 
- */
+        MonstPlus monPlus = new MonstPlus(monsterAllInfo, 4);
+        MonstPlus mons2Plus = new MonstPlus(monsterAllInfo2, 5);
+        ArrayList<MonstPlus> mm = new ArrayList<>();
+        mm.add(monPlus);
+        mm.add(mons2Plus);
+
+        Fight fight = new Fight(mm);
+        ArrayList<Fight> fights = new ArrayList<>();
+        fights.add(fight);
+        Adventure adv = new Adventure("Joana Gutierrez", fights);
+        am.PROVAJOANA2(adv);
+
+
         if(!check) {
             menu.showMessage("\nTavern keeper: “You plan to undertake "+newAdventure+", really?”\n" +
                     "“How long will that take?”\n");
@@ -180,51 +176,66 @@ public class MenuController {
                 menu.showMessage("Tavern keeper: “"+ numFights +" encounters? That is too much for me...”");
                 // Per cada combat de l'aventura demanem info.
                 for(int i=0; i<numFights; i++) {
-                    menu.showMessage("\n\n* Encounter " + (i+1) + " / " + numFights + "\n" +
-                            "* Monsters in encounter");
-                    ArrayList<String> names = am.getAdventureMonsters(newAdventure);
-                    menu.showMonstAdvList(names);
+                    Boolean next = false;
+                    while(!next){
+                        menu.showMessage("\n\n* Encounter " + (i+1) + " / " + numFights + "\n" +
+                                "* Monsters in encounter");
+                        ArrayList<String> names = am.getAdventureMonsters(newAdventure);
+                        menu.showMonstAdvList(names);
 
-                    //LLegir monstres aventura o si esta empty mostro empty
-                    menu.showMessage("\n1. Add monster\n" +
-                            "2. Remove monster\n" +
-                            "3. Continue");
-                    int option = menu.askNumberInARange("\n-> Enter an option [1..3]: ", 1,3);
+                        //LLegir monstres aventura o si esta empty mostro empty
+                        menu.showMessage("\n1. Add monster\n" +
+                                "2. Remove monster\n" +
+                                "3. Continue");
+                        int option = menu.askNumberInARange("\n-> Enter an option [1..3]: ", 1,3);
+                        switch (option){
+                            case 1:
+                                // 1. Afegir monstres
+                                //Mostra tots els monstres possibles (fitxer)
+                                ArrayList<String> monstNames =  am.getAllMonstersName();
+                                ArrayList<String> monstTypes =  am.getAllMonstersType();
+                                menu.showMonstersList(monstNames, monstTypes);
 
-                    switch (option){
-                        case 1:
-                            // 1. Afegir monstres
-                            //Mostra tots els monstres possibles (fitxer)
-                            ArrayList<String> monstNames =  am.getAllMonstersName();
-                            ArrayList<String> monstTypes =  am.getAllMonstersType();
-                            menu.showMonstersList(monstNames, monstTypes);
+                                int indexAdd = menu.askNumberInARange("\n-> Choose a monster to add [1.."+monstNames.size()+"]: ", 1, monstNames.size());
+                                //Agafo Info monstre
+                                Monster monster = am.getMonsterInformation(indexAdd - 1);
 
-                            int indexAdd = menu.askNumberInARange("\n-> Choose a monster to add [1.."+monstNames.size()+"]: ", 1, monstNames.size());   //Posar num max de llista.
-                            int amount = menu.askForInteger("-> How many NOM MONSTRE (s) do you want to add:"); //Afegir nom monstre
+                                int amount = menu.askForInteger("-> How many NOM MONSTRE (s) do you want to add:"); //Afegir nom monstre
+                                am.addMonsterInAdv(newAdventure, monster, amount, i);
 
-                            //Afegir monstre/s
-                            // 1. Add monster (del combat concret, arrayList de monstres de dins de fight, dins del tipo de monstre altre classe).
-                            // A aventuraManager fer addMonster, i que faci actualitza num monstres amb el nom, a classe Fight.
-                            // creo funcio Show monsters i li paso ArrayList? o faig bucle aqui???
-                            break;
-                        case 2:
-                            // 2. Remove monster
-                            int indexDel = menu.askForInteger("-> Which monster do you want to delete: ");
-                            // amb l'index busca el monstre i elimina -> advManager -> monst dins de fight.
-                            menu.showMessage("9 Nazgul were removed from the encounter."); //change name i num de monstres
+                                //Afegeixo monstre a l'aventura pero si existeix add mosntre sino creo aventura??
 
-                            break;
-                        case 3:
-                            // 3. Continue
-                            break;
+                                //Afegir monstre/s
+                                // 1. Add monster (del combat concret, arrayList de monstres de dins de fight, dins del tipo de monstre altre classe).
+                                // A aventuraManager fer addMonster, i que faci actualitza num monstres amb el nom, a classe Fight.
+                                // creo funcio Show monsters i li paso ArrayList? o faig bucle aqui???
+                                break;
+                            case 2:
+                                // 2. Remove monster
+                                int indexDel = menu.askForInteger("-> Which monster do you want to delete: ");
+                                ArrayList<String> names2 = am.getAllMonstersName();
+                                String nameMonster = names2.get(indexDel-1);
+                                //COMPORBACIO
+                                System.out.println("NOM MONSTRE: " + nameMonster);
+                                am.removeAdventureMonster(nameMonster, newAdventure);
+                                int numMonster = am.getNumMonster(nameMonster, newAdventure);
+                                menu.showMessage(numMonster + " " + nameMonster + " were removed from the encounter.");
+
+                                break;
+                            case 3:
+                                // 3. Continue
+                                next = true;
+                                break;
+                        }
                     }
+
                 }
                 menu.showMessage("Tavern keeper: “Great plan lad! I hope you won’t die!”\n"+
                         "The new adventure "+newAdventure+" has been created.");
             }
 
         }else{
-            menu.showMessage("Adventure already exists.\n");
+            menu.showMessage("\nAdventure already exists.");
         }
     }
 
