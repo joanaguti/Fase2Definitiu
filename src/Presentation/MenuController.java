@@ -150,7 +150,7 @@ public class MenuController {
     private void createAdventure() throws IOException {
         menu.showMessage("\nTavern keeper: “Planning an adventure? Good luck with that!”\n");
         String newAdventure = menu.askForString("-> Name your adventure: ");
-        Boolean check = false; //am.adventureExists(newAdventure);
+        Boolean check = false;//am.adventureExists(newAdventure);
 
         Monster monsterAllInfo = new Monster("Gothmog", "Boss", 148,87 , 3, "d20", "Magical");
         Monster monsterAllInfo2 = new Monster("Cris", "challege2", 2,3 , 3, "dice2", "type2");
@@ -203,10 +203,6 @@ public class MenuController {
                                 int amount = menu.askForInteger("-> How many NOM MONSTRE (s) do you want to add:"); //Afegir nom monstre
                                 am.addMonsterInAdv(newAdventure, monster, amount, i);
 
-                                //Afegeixo monstre a l'aventura pero si existeix add mosntre sino creo aventura??
-
-                                //Afegir monstre/s
-                                // 1. Add monster (del combat concret, arrayList de monstres de dins de fight, dins del tipo de monstre altre classe).
                                 // A aventuraManager fer addMonster, i que faci actualitza num monstres amb el nom, a classe Fight.
                                 // creo funcio Show monsters i li paso ArrayList? o faig bucle aqui???
                                 break;

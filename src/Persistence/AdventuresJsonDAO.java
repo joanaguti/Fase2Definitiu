@@ -30,18 +30,17 @@ public class AdventuresJsonDAO {
         return adventures;
     }
 
-    public ArrayList<String> getAllMonsters(String name){
+    public ArrayList<String> getAllNameMonstersOfOneFight(String name, int numFight){
+        System.out.println("INICI get all name monsters");
         ArrayList<String> names = new ArrayList<>();
         ArrayList<Adventure> adventures = readAdventures();
         for (int i = 0; i < adventures.size(); i++) {
             if(name.equals(adventures.get(i).getAdventureName())){
                 ArrayList<Fight> fights = adventures.get(i).getFightList();
-                for(int j = 0; j<fights.size(); j++){
-                    ArrayList<MonstPlus> monstersPlus = fights.get(j).getMonsters();
-                    for(int k=0; k<monstersPlus.size(); k++){
-                        Monster monsters = monstersPlus.get(i).getMonster();
-                        names.add(monsters.getNameMonster());
-                    }
+                ArrayList<MonstPlus> monstersPlus = fights.get(numFight).getMonsters();
+                for(int k=0; k<monstersPlus.size(); k++){
+                    Monster monsters = monstersPlus.get(k).getMonster();
+                    names.add(monsters.getNameMonster());
                 }
             }
         }

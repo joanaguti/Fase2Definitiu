@@ -149,10 +149,10 @@ public class MenuView {
             System.out.println(j+1+". "+name+" ("+type+")");
         }
     }
-    public void showMonstAdvList(ArrayList<String> names){
+    public void showMonstAdvList(ArrayList<String> names, ArrayList<Integer> amounts){
         if(names.size() != 0){
             for(int i=0; i<names.size(); i++){
-                System.out.println((i+1)+ ". "+names.get(i)+ "(x2AÑADIR CANTIDAD)");
+                System.out.println((i+1)+ ". "+names.get(i)+ "(x"+amounts.get(i)+")");
             }
         }else{
             System.out.println("#Empty");
