@@ -22,6 +22,7 @@ public class Monster {
         this.damageType = damageType;
     }
 
+
     public String getNameMonster() {
         return name;
     }

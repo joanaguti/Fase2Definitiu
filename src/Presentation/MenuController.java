@@ -150,7 +150,7 @@ public class MenuController {
     private void createAdventure() throws IOException {
         menu.showMessage("\nTavern keeper: “Planning an adventure? Good luck with that!”\n");
         String newAdventure = menu.askForString("-> Name your adventure: ");
-        Boolean check = false;//am.adventureExists(newAdventure);
+        Boolean check = am.adventureExists(newAdventure);
 
         Monster monsterAllInfo = new Monster("Gothmog", "Boss", 148,87 , 3, "d20", "Magical");
         Monster monsterAllInfo2 = new Monster("Cris", "challege2", 2,3 , 3, "dice2", "type2");
@@ -199,12 +199,9 @@ public class MenuController {
                                 int indexAdd = menu.askNumberInARange("\n-> Choose a monster to add [1.."+monstNames.size()+"]: ", 1, monstNames.size());
                                 //Agafo Info monstre
                                 Monster monster = am.getMonsterInformation(indexAdd - 1);
-
-                                int amount = menu.askForInteger("-> How many NOM MONSTRE (s) do you want to add:"); //Afegir nom monstre
-                                am.addMonsterInAdv(newAdventure, monster, amount, i);
-
-                                // A aventuraManager fer addMonster, i que faci actualitza num monstres amb el nom, a classe Fight.
-                                // creo funcio Show monsters i li paso ArrayList? o faig bucle aqui???
+                                String monstName = am.getOneMonstName(monster);
+                                int amount = menu.askForInteger("-> How many "+monstName+"(s) do you want to add: "); //Afegir nom monstre
+                                am.addMonsterInAdv(newAdventure, monster, amount, i, numFights);
                                 break;
                             case 2:
                                 // 2. Remove monster

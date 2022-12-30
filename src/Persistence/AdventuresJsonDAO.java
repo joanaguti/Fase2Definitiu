@@ -22,7 +22,7 @@ public class AdventuresJsonDAO {
         try {
             FileReader fr = new FileReader("Files/adventures.json");
             Adventure[] listall = gson.fromJson(gson.newJsonReader(fr), Adventure[].class );
-            adventures = new ArrayList<Adventure>(List.of(listall));
+            adventures = new ArrayList<>(List.of(listall));
 
         } catch (FileNotFoundException e) {
             System.out.println("Error opening");
@@ -31,7 +31,6 @@ public class AdventuresJsonDAO {
     }
 
     public ArrayList<String> getAllNameMonstersOfOneFight(String name, int numFight){
-        System.out.println("INICI get all name monsters");
         ArrayList<String> names = new ArrayList<>();
         ArrayList<Adventure> adventures = readAdventures();
         for (int i = 0; i < adventures.size(); i++) {

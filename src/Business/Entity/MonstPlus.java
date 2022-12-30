@@ -8,6 +8,8 @@ public class MonstPlus {
         this.monster = monster;
         this.num = num;
     }
+    public MonstPlus() {
+    }
 
     public int getNum() {
         return num;

@@ -33,6 +33,9 @@ public class AdventureManager {
     public ArrayList<String> getAdventureMonsters(String name){
         return advJsonDAO.getAllMonsters(name);
     }
+    public String getOneMonstName(Monster monster){
+        return monster.getName();
+    }
 
     public void addOneAdventure(Adventure adventure) throws IOException {
         advJsonDAO.writeFileOneAdv(adventure);
