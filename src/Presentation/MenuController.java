@@ -201,7 +201,14 @@ public class MenuController {
                                 Monster monster = am.getMonsterInformation(indexAdd - 1);
                                 String monstName = am.getOneMonstName(monster);
                                 int amount = menu.askForInteger("-> How many "+monstName+"(s) do you want to add: "); //Afegir nom monstre
-                                am.addMonsterInAdv(newAdventure, monster, amount, i, numFights);
+                                // check boss exists -> true ya existe boss no add
+                                if(!am.checkBossExists(numFights, newAdventure)){
+                                    if(am.checkAddOneBoss(amount, monster)){
+                                        am.addMonsterInAdv(newAdventure, monster, amount, i, numFights);
+                                    }
+                                }else{
+                                    menu.showMessage("ERROR: There is one Boss in this fight");
+                                }
                                 break;
                             case 2:
                                 // 2. Remove monster
