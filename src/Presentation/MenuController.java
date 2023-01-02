@@ -53,7 +53,11 @@ public class MenuController {
 
         do {
             // Comprobar fitxer es pot llegir   Data was successfully loaded.   fer funcio al DAO
-            menu.showMenu();
+            if(cm.activateOp()){
+                menu.showMenu();
+            }else{
+                menu.showMenuWithoutAdv();
+            }
 
             option = menu.askForInteger("\nYour answer: ");
             executeOption(option);
@@ -243,16 +247,38 @@ public class MenuController {
     }
 
     private void startAdventure(){
+        //FALTA DESACTIVAR OPCIO PRINTF MENU SI MENYS DE 3 CARACTER AL FITCHER DE CHARACTERS
         menu.showMessage("Tavern keeper: “So, you are looking to go on an adventure?”");
         menu.showMessage("“Where do you fancy going?”\n\nAvailable adventures:");
-        menu.showAdvList(pm.getAllAdventureNames());
-        int index = menu.askNumberInARange("\n-> Choose an adventure:", 1, am.getAllAdvSize());
+        menu.showStandardList(pm.getAllAdventureNames());
+        int index = menu.askNumberInARange("\n-> Choose an adventure: ", 1, am.getAllAdvSize());
 
         menu.showMessage("\nTavern keeper: “"+pm.getAllAdventureNames().get(index-1)+" it is!”\n" +
                 "“And how many people shall join you?”");
-        int charNum = menu.askNumberInARange("-> Choose a number of characters [3..5]: ", 3, 5);
+        int charNum = menu.askNumberInARange("\n-> Choose a number of characters [3..5]: ", 3, 5);
+        menu.showMessage("\nTavern keeper: “Great, "+charNum+" it is.”\n" +
+                "“Who among these lads shall join you?”");
+        ArrayList<String> partyCharsNames = new ArrayList<>();
+        for(int i=0; i<charNum; i++){
+            menu.showMessage("\n\nYour party ("+(i+1)+" / "+charNum+"):");
+            menu.showMessage("------------------------------");
+            menu.showCharsParty(partyCharsNames);
+            menu.showMessage("------------------------------");
+            menu.showMessage("Available characters:");
+            menu.showStandardList(cm.getCharNames());
+            int selectChar = menu.askNumberInARange("\n-> Choose character "+(i+1)+" in your party: ", 1, cm.getCharNames().size());
+            partyCharsNames.add(i, cm.getCharNames().get(selectChar-1));
+            //Guardar aventura entera y personajes enteros
+            // Party party = new Party(adventure, characters);
+            menu.showMessage("\nTavern keeper: “Great, good luck on your adventure lads!”\n");
+            menu.showMessage("The “"+pm.getAllAdventureNames().get(index-1)+"” will start soon...");
+        }
+        menu.showMessage("\n------------------------------");
 
-
+        menu.showMessage("------------------------------");
+        menu.showMessage("------------------------------");
+        menu.showMessage("*** Preparation stage ***");
+        menu.showMessage("------------------------------");
     }
 
     private void stopProgram(){

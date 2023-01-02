@@ -93,4 +93,12 @@ public class CharacterManager {
     public int getStatistic(int a,int b){
         return a+b;
     }
+
+    public ArrayList<String> getCharNames(){
+        return charJsonDAO.readCharNames();
+    }
+
+    public Boolean activateOp(){
+        return charJsonDAO.countCharsFile();
+    }
 }

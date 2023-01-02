@@ -32,6 +32,15 @@ public class MenuView {
                 "5) Exit");
 
     }
+    public void showMenuWithoutAdv(){
+        System.out.println("\nThe tavern keeper looks at you and says:\n"+"“Welcome adventurer! How can I help you?”\n");
+        System.out.println("1) Character creation\n" +
+                "2) List Characters\n" +
+                "3) Create an adventure\n" +
+                "4) Start an adventure (disabled: create 3 characters first)\n" +
+                "5) Exit");
+
+    }
     public int askForInteger(String message) {
         while (true) {
             try {
@@ -183,9 +192,19 @@ public class MenuView {
         } while (numTimes<3);
         return 0;
     }
-    public void showAdvList(ArrayList<String> names){
+    public void showStandardList(ArrayList<String> names){
         for(int i=0; i<names.size(); i++){
-            System.out.println((i+1)+". "+ names.get(i));
+            System.out.println("\t"+(i+1)+". "+ names.get(i));
+        }
+    }
+    public void showCharsParty(ArrayList <String> names){
+        for(int i=0; i<5; i++){
+            if(names.size()> i){
+                System.out.println("\t"+(i+1)+". "+ names.get(i));
+            }else{
+                System.out.println("\t"+(i+1)+".  Empty");
+            }
+
         }
     }
 }

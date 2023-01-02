@@ -100,5 +100,18 @@ public class CharactersJsonDAO {
         writeFileAllChr(characters);
 
     }
+    public ArrayList<String> readCharNames(){
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<Character> characters = readCharacters();
+        for (int i = 0; i < characters.size(); i++) {
+            names.add(i, characters.get(i).getName());
+        }
+        return names;
+    }
+    public Boolean countCharsFile(){
+        ArrayList<Character> characters = readCharacters();
+        // true -> puc fer op 4
+        return characters.size() > 2;
+    }
 
 }
