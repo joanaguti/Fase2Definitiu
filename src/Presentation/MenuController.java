@@ -203,12 +203,16 @@ public class MenuController {
                                 int amount = menu.askForInteger("-> How many "+monstName+"(s) do you want to add: "); //Afegir nom monstre
                                 // check boss exists -> true ya existe boss no add
                                 if(!am.checkBossExists(numFights, newAdventure)){
-                                    if(am.checkAddOneBoss(amount, monster)){
-                                        am.addMonsterInAdv(newAdventure, monster, amount, i, numFights);
-                                    }
+                                    am.addMonsterInAdv(newAdventure, monster, amount, i, numFights);
                                 }else{
-                                    menu.showMessage("ERROR: There is one Boss in this fight");
+                                    menu.showMessage("ERROR: You can add only one boss.");
                                 }
+                                /*
+                                if(!am.checkBossExists(numFights, newAdventure) || am.checkBossAmount(amount, monster)){
+                                    am.addMonsterInAdv(newAdventure, monster, amount, i, numFights);
+                                }else{
+                                    menu.showMessage("ERROR: You can add only one boss.");
+                                }*/
                                 break;
                             case 2:
                                 // 2. Remove monster
