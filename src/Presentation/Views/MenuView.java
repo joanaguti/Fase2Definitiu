@@ -183,5 +183,10 @@ public class MenuView {
         } while (numTimes<3);
         return 0;
     }
+    public void showAdvList(ArrayList<String> names){
+        for(int i=0; i<names.size(); i++){
+            System.out.println((i+1)+". "+ names.get(i));
+        }
+    }
 }
 

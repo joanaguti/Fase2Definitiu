@@ -195,13 +195,12 @@ public class MenuController {
                                 ArrayList<String> monstNames =  am.getAllMonstersName();
                                 ArrayList<String> monstTypes =  am.getAllMonstersType();
                                 menu.showMonstersList(monstNames, monstTypes);
-
                                 int indexAdd = menu.askNumberInARange("\n-> Choose a monster to add [1.."+monstNames.size()+"]: ", 1, monstNames.size());
-                                //Agafo Info monstre
                                 Monster monster = am.getMonsterInformation(indexAdd - 1);
                                 String monstName = am.getOneMonstName(monster);
                                 int amount = menu.askForInteger("-> How many "+monstName+"(s) do you want to add: "); //Afegir nom monstre
                                 // check boss exists -> true ya existe boss no add
+                                //Posar addMonster al manager perque al controler hi hagi menys logica
                                 if(!am.checkBossExists(i, newAdventure)){
                                     if(am.checkIsNotABoss(monster)){
                                         am.addMonsterInAdv(newAdventure, monster, amount, i, numFights);
@@ -246,7 +245,14 @@ public class MenuController {
     private void startAdventure(){
         menu.showMessage("Tavern keeper: “So, you are looking to go on an adventure?”");
         menu.showMessage("“Where do you fancy going?”\n\nAvailable adventures:");
-        //List adventures (adventure manager-> retorna llista) li paso a menu.showList.
+        menu.showAdvList(pm.getAllAdventureNames());
+        int index = menu.askNumberInARange("\n-> Choose an adventure:", 1, am.getAllAdvSize());
+
+        menu.showMessage("\nTavern keeper: “"+pm.getAllAdventureNames().get(index-1)+" it is!”\n" +
+                "“And how many people shall join you?”");
+        int charNum = menu.askNumberInARange("-> Choose a number of characters [3..5]: ", 3, 5);
+
+
     }
 
     private void stopProgram(){
