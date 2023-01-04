@@ -267,7 +267,12 @@ public class MenuController {
             menu.showMessage("Available characters:");
             menu.showStandardList(cm.getCharNames());
             int selectChar = menu.askNumberInARange("\n-> Choose character "+(i+1)+" in your party: ", 1, cm.getCharNames().size());
-            partyCharsNames.add(i, cm.getCharNames().get(selectChar-1));
+            if(!pm.charPartyExists(partyCharsNames, cm.getCharNames().get(selectChar-1))){
+                partyCharsNames.add(i, cm.getCharNames().get(selectChar-1));
+            }else{
+                menu.showMessage("ERROR: Character already exists. ");
+                i--;
+            }
             //Guardar aventura entera y personajes enteros
             // Party party = new Party(adventure, characters);
             menu.showMessage("\nTavern keeper: “Great, good luck on your adventure lads!”\n");

@@ -28,4 +28,12 @@ public class PlayManager {
     public void createParty(ArrayList<Character> characters, Adventure adventure){
 
     }
+    public Boolean charPartyExists(ArrayList<String> names, String newName){
+        for(int i=0; i<names.size(); i++){
+            if(names.get(i).equals(newName)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
