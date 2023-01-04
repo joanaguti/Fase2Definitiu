@@ -16,11 +16,10 @@ public class Main {
             //abans hi havia gson entre (), ho he tret.
             AdventuresJsonDAO advJsonDAO = new AdventuresJsonDAO();
             DiceRoller dice = new DiceRoller();
-
             MonstersJsonDAO monstJsonDAO = new MonstersJsonDAO();
-            CharacterManager cm = new CharacterManager(charJsonDAO);
+            CharacterManager cm = new CharacterManager(charJsonDAO, dice);
             AdventureManager am = new AdventureManager(advJsonDAO, monstJsonDAO);
-            PlayManager pm = new PlayManager(advJsonDAO);
+            PlayManager pm = new PlayManager(advJsonDAO, charJsonDAO);
             MenuController mc = new MenuController(menu, cm, am, pm);
             mc.run();
         }catch(Exception ex){

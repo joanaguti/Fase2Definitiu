@@ -11,9 +11,10 @@ public class CharacterManager {
     private Character character;
     private DiceRoller dice;
 
-    public CharacterManager(CharactersJsonDAO charJsonDAO) {
+    public CharacterManager(CharactersJsonDAO charJsonDAO, DiceRoller dice) {
         this.charJsonDAO = charJsonDAO;
         this.character = null;
+        this.dice = dice;
     }
 
     public String changeName(String name){
@@ -65,6 +66,13 @@ public class CharacterManager {
         return charJsonDAO.selectCharacters(player);
     }
 
+    public int setExpPoints(int level){
+        int xp =0;
+        for(int i = level-1; i>0; i--){
+            xp = xp+100;
+        }
+        return xp;
+    }
     public void addCharacter (String name, String player, int xp, int body, int mind, int spirit, String type) throws IOException {
         Character character = new Character(name, player, xp, body, mind, spirit, type);
         charJsonDAO.writeFileOneChr(character);

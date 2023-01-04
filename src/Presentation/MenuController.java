@@ -80,6 +80,7 @@ public class MenuController {
                 menu.showMessage("\nTavern keeper: “I see, I see...”");
                 menu.showMessage("“Now, are you an experienced adventurer?”");
                 int level = menu.askNumberInARange("\n-> Enter the character’s level [1..10]: ", 1, 10);
+                int xp = cm.setExpPoints(level);
                 menu.showMessage("\nTavern keeper: “Oh, so you are level "+ level +"!”");
                 menu.showMessage("“Great, let me get a closer look at you...”");
                 int bodyA = cm.getRandom();
@@ -105,7 +106,7 @@ public class MenuController {
                 //Afegeix al Json el personatge amb info.
                 menu.showMessage("\nThe new character "+name+" has been created.");
                 //Es fa be el add, ho comentem per no acomular proves al fitxer
-                //cm.addCharacter(newName, playerName, level, body, mind, spirit, "Adventure");
+                cm.addCharacter(newName, playerName, xp, body, mind, spirit, "Adventure");
             }else{
                 menu.showMessage("\nCharacter already exists");
             }
@@ -247,7 +248,6 @@ public class MenuController {
     }
 
     private void startAdventure(){
-        //FALTA DESACTIVAR OPCIO PRINTF MENU SI MENYS DE 3 CARACTER AL FITCHER DE CHARACTERS
         menu.showMessage("Tavern keeper: “So, you are looking to go on an adventure?”");
         menu.showMessage("“Where do you fancy going?”\n\nAvailable adventures:");
         menu.showStandardList(pm.getAllAdventureNames());
@@ -273,11 +273,12 @@ public class MenuController {
                 menu.showMessage("ERROR: Character already exists. ");
                 i--;
             }
+            Party party = pm.createParty(partyCharsNames, pm.getAllAdventureNames().get(index-1));
             //Guardar aventura entera y personajes enteros
             // Party party = new Party(adventure, characters);
-            menu.showMessage("\nTavern keeper: “Great, good luck on your adventure lads!”\n");
-            menu.showMessage("The “"+pm.getAllAdventureNames().get(index-1)+"” will start soon...");
         }
+        menu.showMessage("\nTavern keeper: “Great, good luck on your adventure lads!”\n");
+        menu.showMessage("The “"+pm.getAllAdventureNames().get(index-1)+"” will start soon...");
         menu.showMessage("\n------------------------------");
 
         menu.showMessage("------------------------------");

@@ -55,4 +55,8 @@ public class Character {
     public String getCharacterType() {
         return characterType;
     }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
 }
