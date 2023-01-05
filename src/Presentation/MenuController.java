@@ -209,8 +209,10 @@ public class MenuController {
                                 if(!am.checkBossExists(i, newAdventure)){
                                     if(am.checkIsNotABoss(monster)){
                                         am.addMonsterInAdv(newAdventure, monster, amount, i, numFights);
+                                        checkAdd = true;
                                     }else if(am.checkBossAmount(amount)){
                                         am.addMonsterInAdv(newAdventure, monster, amount, i, numFights);
+                                        checkAdd = true;
                                     }else{
                                         menu.showMessage("\nERROR: You can add only one boss.");
                                     }
@@ -232,9 +234,14 @@ public class MenuController {
                                 break;
                             case 3:
                                 // 3. Continue
-                                next = true;
+                                if(!checkAdd && first){             //Si faig 2 continues si deixa sense add-> MAL
+                                    menu.showMessage("\nERROR: Need one monster in fight.");
+                                }else{
+                                    next = true;
+                                }
                                 break;
                         }
+                        first = false;
                     }
 
                 }
