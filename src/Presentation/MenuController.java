@@ -178,12 +178,12 @@ public class MenuController {
                     "“How long will that take?”\n");
             int numFights = menu.askNumberInARangeThreeTimes("-> How many encounters do you want [1..4]: ", 1, 4);
             if(numFights != 0){
-                menu.showMessage("Tavern keeper: “"+ numFights +" encounters? That is too much for me...”");
+                menu.showMessage("Tavern keeper: “"+ numFights +" encounters? That is too much for me...”\n");
                 // Per cada combat de l'aventura demanem info.
                 for(int i=0; i<numFights; i++) {
                     Boolean next = false;
                     while(!next){
-                        menu.showMessage("\n\n* Encounter " + (i+1) + " / " + numFights + "\n" +
+                        menu.showMessage("\n* Encounter " + (i+1) + " / " + numFights + "\n" +
                                 "* Monsters in encounter");
                         ArrayList<String> names = am.getAdventureMonsters(newAdventure);
                         menu.showMonstAdvList(names);
@@ -234,14 +234,13 @@ public class MenuController {
                                 break;
                             case 3:
                                 // 3. Continue
-                                if(!checkAdd && first){             //Si faig 2 continues si deixa sense add-> MAL
+                                if(!checkAdd){             //Si faig 2 continues si deixa sense add-> MAL
                                     menu.showMessage("\nERROR: Need one monster in fight.");
                                 }else{
                                     next = true;
                                 }
                                 break;
                         }
-                        first = false;
                     }
 
                 }
@@ -266,32 +265,36 @@ public class MenuController {
         menu.showMessage("\nTavern keeper: “Great, "+charNum+" it is.”\n" +
                 "“Who among these lads shall join you?”");
         ArrayList<String> partyCharsNames = new ArrayList<>();
-        for(int i=0; i<charNum; i++){
-            menu.showMessage("\n\nYour party ("+(i+1)+" / "+charNum+"):");
+        for(int i=0; i<charNum; i++) {
+            menu.showMessage("\n\nYour party (" + (i + 1) + " / " + charNum + "):");
             menu.showMessage("------------------------------");
             menu.showCharsParty(partyCharsNames);
             menu.showMessage("------------------------------");
             menu.showMessage("Available characters:");
             menu.showStandardList(cm.getCharNames());
-            int selectChar = menu.askNumberInARange("\n-> Choose character "+(i+1)+" in your party: ", 1, cm.getCharNames().size());
-            if(!pm.charPartyExists(partyCharsNames, cm.getCharNames().get(selectChar-1))){
-                partyCharsNames.add(i, cm.getCharNames().get(selectChar-1));
-            }else{
+            int selectChar = menu.askNumberInARange("\n-> Choose character " + (i + 1) + " in your party: ", 1, cm.getCharNames().size());
+            if (!pm.charPartyExists(partyCharsNames, cm.getCharNames().get(selectChar - 1))) {
+                partyCharsNames.add(i, cm.getCharNames().get(selectChar - 1));
+            } else {
                 menu.showMessage("ERROR: Character already exists. ");
                 i--;
             }
+        }
             Party party = pm.createParty(partyCharsNames, pm.getAllAdventureNames().get(index-1));
+            menu.showMessage("\nTavern keeper: “Great, good luck on your adventure lads!”\n");
+            menu.showMessage("The “"+pm.getAllAdventureNames().get(index-1)+"” will start soon...");
+            for(int j=0; j<pm.getAdvFightSize(party); j++){
+                menu.showMessage("------------------------------");
+                menu.showMessage("Starting Encounter "+(j+1)+":");
+                menu.showMonstFightList(pm.getMonstNames(party, j), pm.getMonstAmount(party, j));
+                menu.showMessage("------------------------------");
+                menu.showMessage("\n\n------------------------------");
+                menu.showMessage("*** Preparation stage ***");
+                menu.showMessage("------------------------------");
+                // Comença fight
+            }
             //Guardar aventura entera y personajes enteros
             // Party party = new Party(adventure, characters);
-        }
-        menu.showMessage("\nTavern keeper: “Great, good luck on your adventure lads!”\n");
-        menu.showMessage("The “"+pm.getAllAdventureNames().get(index-1)+"” will start soon...");
-        menu.showMessage("\n------------------------------");
-
-        menu.showMessage("------------------------------");
-        menu.showMessage("------------------------------");
-        menu.showMessage("*** Preparation stage ***");
-        menu.showMessage("------------------------------");
     }
 
     private void stopProgram(){

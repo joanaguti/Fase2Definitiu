@@ -207,5 +207,10 @@ public class MenuView {
 
         }
     }
+    public void showMonstFightList(ArrayList<String> names, ArrayList<Integer> total){
+        for(int i=0; i<names.size(); i++){
+            System.out.println("- "+total.get(i)+ "x "+ names.get(i));
+        }
+    }
 }
 

@@ -53,6 +53,25 @@ public class PlayManager {
         }
         return false;
     }
+    public int getAdvFightSize(Party party){
+        return party.getAdventure().getFightList().size();
+    }
+    public ArrayList<String> getMonstNames(Party party, int numFight){
+        ArrayList<String> names = new ArrayList<>();
+        for(int i=0; i<party.getAdventure().getFightList().get(numFight).getMonsters().size(); i++){
+            String name = party.getAdventure().getFightList().get(numFight).getMonsters().get(i).getMonster().getName();
+            names.add(name);
+        }
+        return names;
+    }
+    public ArrayList<Integer> getMonstAmount(Party party, int numFight){
+        ArrayList<Integer> total = new ArrayList<>();
+        for(int i=0; i<party.getAdventure().getFightList().get(numFight).getMonsters().size(); i++){
+            int amount = party.getAdventure().getFightList().get(numFight).getMonsters().get(i).getNum();
+            total.add(amount);
+        }
+        return total;
+    }
     public void preparationPhase(){
 
     }
