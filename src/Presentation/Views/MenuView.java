@@ -212,5 +212,10 @@ public class MenuView {
             System.out.println("- "+total.get(i)+ "x "+ names.get(i));
         }
     }
+    public void showInitiativeList(ArrayList<String> names, ArrayList<Integer> init){
+        for(int i=0; i<names.size(); i++){
+            System.out.println("- "+ init.get(i)+"     "+ names.get(i));
+        }
+    }
 }
 

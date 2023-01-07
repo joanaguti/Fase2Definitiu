@@ -7,8 +7,6 @@ public class Character {
     private String name;
     private String player;
     private int xp;
-    //private int characterLever;
-    //private int characterPoints;
     private int body;
     private int mind;
     private int spirit;
@@ -58,5 +56,8 @@ public class Character {
 
     public void setXp(int xp) {
         this.xp = xp;
+    }
+    public void selfMotivated(){
+        this.spirit = spirit + 1;
     }
 }

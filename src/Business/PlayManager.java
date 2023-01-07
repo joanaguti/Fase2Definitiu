@@ -6,16 +6,19 @@ import Business.Entity.Character;
 import Persistence.AdventuresJsonDAO;
 import Persistence.CharactersJsonDAO;
 
+import java.sql.Array;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class PlayManager {
     private AdventuresJsonDAO advJsonDAO;
     private CharactersJsonDAO charJsonDAO;
+    private DiceRoller dice;
 
-    public PlayManager(AdventuresJsonDAO advJsonDAO, CharactersJsonDAO charJsonDAO) {
+    public PlayManager(AdventuresJsonDAO advJsonDAO, CharactersJsonDAO charJsonDAO, DiceRoller dice) {
         this.advJsonDAO = advJsonDAO;
         this.charJsonDAO = charJsonDAO;
+        this.dice = dice;
     }
 
     public ArrayList<String> getAllAdventureNames(){
@@ -72,8 +75,39 @@ public class PlayManager {
         }
         return total;
     }
-    public void preparationPhase(){
+    public Party preparationPhase(Party party, int numChar){
+            party.getCharacters().get(numChar).selfMotivated();
+        return party;
+    }
+    public Party allMonstIniciate(Party party, int numFight){
+        int random = dice.rollDice(12, 1);
+        for(int i=0; i<party.getAdventure().getFightList().get(numFight).getMonsters().size(); i++){
+            int num = party.getAdventure().getFightList().get(numFight).getMonsters().get(i).getMonster().getInitiative();
+            party.getAdventure().getFightList().get(numFight).getMonsters().get(i).getMonster().setInitiative(num + random);
+        }
 
+        return party;
+    }
+    public ArrayList<String> getAllMonstCharsFightNames(Party party, int numFight){
+        ArrayList<String> names = new ArrayList<>();
+        for(int i=0; i<party.getAdventure().getFightList().get(numFight).getMonsters().size(); i++){
+            names.add(party.getAdventure().getFightList().get(numFight).getMonsters().get(i).getMonster().getName());
+        }
+        for(int j=0; j<party.getCharacters().size() ; j++){
+            names.add(party.getCharacters().get(j).getName());
+        }
+        return names;
+    }
+    public ArrayList<Integer> getAllMonstCharsFightInit(Party party, int numFight){
+        ArrayList<Integer> initiatives = new ArrayList<>();
+        for(int i=0; i<party.getAdventure().getFightList().get(numFight).getMonsters().size(); i++){
+            initiatives.add(party.getAdventure().getFightList().get(numFight).getMonsters().get(i).getMonster().getInitiative());
+        }
+        for(int j=0; j<party.getCharacters().size() ; j++){
+            int initiative = dice.rollDice(12, 1) + party.getCharacters().get(j).getSpirit();
+            initiatives.add(initiative);
+        }
+        return initiatives;
     }
     public void battlePhase(){
 

@@ -284,14 +284,27 @@ public class MenuController {
             menu.showMessage("\nTavern keeper: “Great, good luck on your adventure lads!”\n");
             menu.showMessage("The “"+pm.getAllAdventureNames().get(index-1)+"” will start soon...");
             for(int j=0; j<pm.getAdvFightSize(party); j++){
-                menu.showMessage("------------------------------");
+                menu.showMessage("\n------------------------------");
                 menu.showMessage("Starting Encounter "+(j+1)+":");
                 menu.showMonstFightList(pm.getMonstNames(party, j), pm.getMonstAmount(party, j));
                 menu.showMessage("------------------------------");
                 menu.showMessage("\n\n------------------------------");
                 menu.showMessage("*** Preparation stage ***");
                 menu.showMessage("------------------------------");
-                // Comença fight
+                for(int i=0; i<charNum; i++) {
+                    party = pm.preparationPhase(party, i);
+                    menu.showMessage(partyCharsNames.get(i)+" uses Self-Motivated. Their Spirit increases in +1.");
+                }
+                menu.showMessage("\nRolling initiative...");
+                party = pm.allMonstIniciate(party, j);
+                menu.showInitiativeList(pm.getAllMonstCharsFightNames(party, j), pm.getAllMonstCharsFightInit(party, j));
+                menu.showMessage("\n\n------------------------------");
+                menu.showMessage("*** Combat stage ***");
+                menu.showMessage("------------------------------");
+                //Numero de torns?
+                // Si no morts o inconscients seguim ordre iniciativa
+                // Aventurers fan Sword slash
+                //Monstre ataca un person aleatori
             }
             //Guardar aventura entera y personajes enteros
             // Party party = new Party(adventure, characters);

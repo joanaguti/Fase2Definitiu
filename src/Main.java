@@ -19,7 +19,7 @@ public class Main {
             MonstersJsonDAO monstJsonDAO = new MonstersJsonDAO();
             CharacterManager cm = new CharacterManager(charJsonDAO, dice);
             AdventureManager am = new AdventureManager(advJsonDAO, monstJsonDAO);
-            PlayManager pm = new PlayManager(advJsonDAO, charJsonDAO);
+            PlayManager pm = new PlayManager(advJsonDAO, charJsonDAO, dice);
             MenuController mc = new MenuController(menu, cm, am, pm);
             mc.run();
         }catch(Exception ex){
