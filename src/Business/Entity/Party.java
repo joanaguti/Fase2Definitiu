@@ -3,12 +3,12 @@ package Business.Entity;
 import java.util.ArrayList;
 
 public class Party {
-    ArrayList<Character> characters;
-    Adventure adventure;
+    private ArrayList<Character> characters;
+    private Adventure adventure;
 
     public Party(ArrayList<Character> characters, Adventure adventure) {
         this.characters = characters;
-        this.adventure = adventure;
+        this.adventure = adventure;     //No fa falta
     }
 
     public ArrayList<Character> getCharacters() {
