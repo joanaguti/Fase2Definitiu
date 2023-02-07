@@ -268,7 +268,7 @@ public class MenuController {
         for(int i=0; i<charNum; i++) {
             menu.showMessage("\n\nYour party (" + (i + 1) + " / " + charNum + "):");
             menu.showMessage("------------------------------");
-            menu.showCharsParty(partyCharsNames);
+            menu.showCharsParty(partyCharsNames, charNum);
             menu.showMessage("------------------------------");
             menu.showMessage("Available characters:");
             menu.showStandardList(cm.getCharNames());
@@ -280,19 +280,21 @@ public class MenuController {
                 i--;
             }
         }
-            Party party = pm.createParty(partyCharsNames, pm.getAllAdventureNames().get(index-1));
+            Adventure adventure = am.getAdventure(pm.getAllAdventureNames().get(index-1)); //am pm funcio get adventure.
+            ArrayList<Character> party = pm.createPartyList(partyCharsNames);
             menu.showMessage("\nTavern keeper: “Great, good luck on your adventure lads!”\n");
             menu.showMessage("The “"+pm.getAllAdventureNames().get(index-1)+"” will start soon...");
-            for(int j=0; j<pm.getAdvFightSize(party); j++){
+            for(int j=0; j<party.size(); j++){
                 menu.showMessage("\n------------------------------");
                 menu.showMessage("Starting Encounter "+(j+1)+":");
-                menu.showMonstFightList(pm.getMonstNames(party, j), pm.getMonstAmount(party, j));
+
+                menu.showMonstFightList(pm.getMonstNames(adventure, j), pm.getMonstAmount(adventure, j));
                 menu.showMessage("------------------------------");
                 menu.showMessage("\n\n------------------------------");
                 menu.showMessage("*** Preparation stage ***");
                 menu.showMessage("------------------------------");
                 for(int i=0; i<charNum; i++) {
-                    party = pm.preparationPhase(party, i);
+                    //party = pm.preparationPhase(party, i);
                     menu.showMessage(partyCharsNames.get(i)+" uses Self-Motivated. Their Spirit increases in +1.");
                 }
                 menu.showMessage("\nRolling initiative...");

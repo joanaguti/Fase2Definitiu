@@ -197,8 +197,8 @@ public class MenuView {
             System.out.println("\t"+(i+1)+". "+ names.get(i));
         }
     }
-    public void showCharsParty(ArrayList <String> names){
-        for(int i=0; i<5; i++){
+    public void showCharsParty(ArrayList <String> names, int charNum){
+        for(int i=0; i<charNum; i++){
             if(names.size()> i){
                 System.out.println("\t"+(i+1)+". "+ names.get(i));
             }else{

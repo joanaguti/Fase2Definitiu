@@ -32,7 +32,7 @@ public class PlayManager {
         }
         return names;
     }
-    public Party createParty(ArrayList<String> names, String advName){
+    public ArrayList<Character> createPartyList(ArrayList<String> names){
         ArrayList<Character> characters = new ArrayList<>();
         for(int i=0; i<names.size(); i++){
             Character character = charJsonDAO.findInfCharacter(names.get(i));
@@ -41,11 +41,7 @@ public class PlayManager {
             character.setXp(xp);
             characters.add(character);
         }
-        Adventure adventure = advJsonDAO.getAdventure(advName);
-        Party party = new Party(characters, adventure);
-        System.out.println(characters.get(0).getPlayer());
-        System.out.println(adventure.getAdventureName());
-        return party;
+        return characters;
     }
 
     public Boolean charPartyExists(ArrayList<String> names, String newName){
@@ -59,18 +55,18 @@ public class PlayManager {
     public int getAdvFightSize(Party party){
         return party.getAdventure().getFightList().size();
     }
-    public ArrayList<String> getMonstNames(Party party, int numFight){
+    public ArrayList<String> getMonstNames(Adventure adventure, int numFight){
         ArrayList<String> names = new ArrayList<>();
-        for(int i=0; i<party.getAdventure().getFightList().get(numFight).getMonsters().size(); i++){
-            String name = party.getAdventure().getFightList().get(numFight).getMonsters().get(i).getMonster().getName();
+        for(int i=0; i<adventure.getFightList().get(numFight).getMonsters().size(); i++){
+            String name = adventure.getFightList().get(numFight).getMonsters().get(i).getMonster().getName();
             names.add(name);
         }
         return names;
     }
-    public ArrayList<Integer> getMonstAmount(Party party, int numFight){
+    public ArrayList<Integer> getMonstAmount(Adventure adventure, int numFight){
         ArrayList<Integer> total = new ArrayList<>();
-        for(int i=0; i<party.getAdventure().getFightList().get(numFight).getMonsters().size(); i++){
-            int amount = party.getAdventure().getFightList().get(numFight).getMonsters().get(i).getNum();
+        for(int i=0; i<adventure.getFightList().get(numFight).getMonsters().size(); i++){
+            int amount = adventure.getFightList().get(numFight).getMonsters().get(i).getNum();
             total.add(amount);
         }
         return total;
