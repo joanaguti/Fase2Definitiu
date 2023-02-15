@@ -14,7 +14,17 @@ public class MonstersJsonDAO {
     public MonstersJsonDAO() {   // CONTROLAR FILENOTFOUND throws FileNotFoundException
         this.gson = new Gson();
     }
-
+    public Boolean fileAccess(){
+        ArrayList <Monster> monsters = new ArrayList<Monster>();
+        try{
+            FileReader fr = new FileReader("Files/monsters.json");
+            Monster[] listall = gson.fromJson(gson.newJsonReader(fr), Monster[].class );
+            monsters = new ArrayList<Monster>(List.of(listall));
+            return true;
+        }catch(FileNotFoundException e){
+            return false;
+        }
+    }
     public ArrayList<Monster> readFile(){
         ArrayList <Monster> monsters = new ArrayList<Monster>();
         try{
@@ -22,8 +32,6 @@ public class MonstersJsonDAO {
             Monster[] listall = gson.fromJson(gson.newJsonReader(fr), Monster[].class );
             monsters = new ArrayList<Monster>(List.of(listall));
         }catch(FileNotFoundException e){
-            // No s'ha pogut obrir el fitxer.
-            System.out.println("ERROR FILE OPENING");
         }
 
         return monsters;

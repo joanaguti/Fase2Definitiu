@@ -51,18 +51,21 @@ public class MenuController {
         int option;
         menu.showMainMessage();
 
-        do {
-            // Comprobar fitxer es pot llegir   Data was successfully loaded.   fer funcio al DAO
-            if(cm.activateOp()){
-                menu.showMenu();
-            }else{
-                menu.showMenuWithoutAdv();
-            }
-
-            option = menu.askForInteger("\nYour answer: ");
-            executeOption(option);
-        } while(option != 5);
-        menu.showMessage("\nTavern keeper: “Are you leaving already? See you soon, adventurer.”");
+        if(am.checkAccess()){
+            do {
+                // Comprobar fitxer es pot llegir   Data was successfully loaded.   fer funcio al DAO
+                if(cm.activateOp()){
+                    menu.showMenu();
+                }else{
+                    menu.showMenuWithoutAdv();
+                }
+                option = menu.askForInteger("\nYour answer: ");
+                executeOption(option);
+            } while(option != 5);
+            menu.showMessage("\nTavern keeper: “Are you leaving already? See you soon, adventurer.”");
+        }else{
+            menu.showMessage("Error: The monsters.json file can’t be accessed.");
+        }
     }
 
     private void createCharacters() throws IOException {
@@ -106,7 +109,7 @@ public class MenuController {
                 //Afegeix al Json el personatge amb info.
                 menu.showMessage("\nThe new character "+name+" has been created.");
                 //Es fa be el add, ho comentem per no acomular proves al fitxer
-                cm.addCharacter(newName, playerName, xp, body, mind, spirit, "Adventure");
+                cm.addCharacter(newName, playerName, xp, body, mind, spirit, "Adventurer");
             }else{
                 menu.showMessage("\nCharacter already exists");
             }
@@ -117,6 +120,8 @@ public class MenuController {
     private void listCharacters() throws IOException {
         menu.showMessage("\nTavern keeper: “Lads! They want to see you!”\n“Who piques your interest?”");
         String player = menu.askForString("\n-> Enter the name of the Player to filter: ");
+        //Case insensitive.
+
         ArrayList<String> names = cm.filterCharacters(player);
         // Comprobamos si el jugador tiene personajes.
         if(names.size() != 0){

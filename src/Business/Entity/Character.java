@@ -12,6 +12,8 @@ public class Character {
     private int spirit;
     @SerializedName("class")
     private String characterType;
+    private int livePoints;
+    private int initiative;
 
     public Character() {
     }

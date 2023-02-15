@@ -36,12 +36,39 @@ public class PlayManager {
         ArrayList<Character> characters = new ArrayList<>();
         for(int i=0; i<names.size(); i++){
             Character character = charJsonDAO.findInfCharacter(names.get(i));
-            // Punts vida maxims ->i actuals??
-            int xp = character.getXp()*(10+character.getBody());
+            int level = calculateCharLevel(character);
+            int maxLivePoints = character.getXp()*(10+character.getBody());
             character.setXp(xp);
             characters.add(character);
         }
         return characters;
+    }
+    public int calculateCharLevel(Character character){
+        int level =0;
+        if(character.getXp()>=0 && character.getXp()<100){
+            level = 1;
+        }else if(character.getXp()>=100 && character.getXp()<200){
+            level = 2;
+        }else if(character.getXp()>=200 && character.getXp()<300){
+            level = 3;
+        }else if(character.getXp()>=300 && character.getXp()<400){
+            level = 4;
+        }else if(character.getXp()>=400 && character.getXp()<500){
+            level = 5;
+        }else if(character.getXp()>=500 && character.getXp()<600){
+            level = 6;
+        }else if(character.getXp()>=600 && character.getXp()<700){
+            level = 7;
+        }else if(character.getXp()>=700 && character.getXp()<800){
+            level = 8;
+        }else if(character.getXp()>=800 && character.getXp()<900){
+            level = 9;
+        }else if(character.getXp()>900){
+            level = 10;
+        }
+
+
+            return level;
     }
 
     public Boolean charPartyExists(ArrayList<String> names, String newName){
@@ -75,14 +102,14 @@ public class PlayManager {
             party.getCharacters().get(numChar).selfMotivated();
         return party;
     }
-    public Party allMonstIniciate(Party party, int numFight){
+    public Adventure allMonstIniciate(Adventure adventure, int numFight){
         int random = dice.rollDice(12, 1);
-        for(int i=0; i<party.getAdventure().getFightList().get(numFight).getMonsters().size(); i++){
-            int num = party.getAdventure().getFightList().get(numFight).getMonsters().get(i).getMonster().getInitiative();
-            party.getAdventure().getFightList().get(numFight).getMonsters().get(i).getMonster().setInitiative(num + random);
+        for(int i=0; i<adventure.getFightList().get(numFight).getMonsters().size(); i++){
+            int num = adventure.getFightList().get(numFight).getMonsters().get(i).getMonster().getInitiative();
+            adventure.getFightList().get(numFight).getMonsters().get(i).getMonster().setInitiative(num + random);
         }
 
-        return party;
+        return adventure;
     }
     public ArrayList<String> getAllMonstCharsFightNames(Party party, int numFight){
         ArrayList<String> names = new ArrayList<>();

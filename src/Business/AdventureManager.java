@@ -19,6 +19,9 @@ public class AdventureManager {
         this.advJsonDAO = advJsonDAO;
         this.monstJsonDAO = monstJsonDAO;
     }
+    public Boolean checkAccess(){
+        return monstJsonDAO.fileAccess();
+    }
 
     public ArrayList<String> getAllMonstersName(){
         return monstJsonDAO.getAllNames();
