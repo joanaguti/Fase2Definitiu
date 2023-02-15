@@ -289,7 +289,7 @@ public class MenuController {
             ArrayList<Character> party = pm.createPartyList(partyCharsNames);
             menu.showMessage("\nTavern keeper: “Great, good luck on your adventure lads!”\n");
             menu.showMessage("The “"+pm.getAllAdventureNames().get(index-1)+"” will start soon...");
-            for(int j=0; j<party.size(); j++){
+            for(int j=0; j<am.getMaxFights(adventure); j++){
                 menu.showMessage("\n------------------------------");
                 menu.showMessage("Starting Encounter "+(j+1)+":");
 
@@ -299,8 +299,16 @@ public class MenuController {
                 menu.showMessage("*** Preparation stage ***");
                 menu.showMessage("------------------------------");
                 for(int i=0; i<charNum; i++) {
-                    //party = pm.preparationPhase(party, i);
-                    menu.showMessage(partyCharsNames.get(i)+" uses Self-Motivated. Their Spirit increases in +1.");
+                    if(pm.checkConcience(party.get(i))){
+                        party = pm.preparationPhase(party, i);
+                        switch (cm.getOneCharType(party.get(i))){
+                            case "Adventurer":
+                                menu.showMessage(partyCharsNames.get(i)+" uses Self-Motivated. Their Spirit increases in +1.");
+                        }
+                    }else{
+                       party =  pm.modifyLivePoints(party.get(i), party);
+                        System.out.println("NO ES");
+                    }
                 }
                 menu.showMessage("\nRolling initiative...");
                 party = pm.allMonstIniciate(party, j);

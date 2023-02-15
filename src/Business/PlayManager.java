@@ -37,8 +37,13 @@ public class PlayManager {
         for(int i=0; i<names.size(); i++){
             Character character = charJsonDAO.findInfCharacter(names.get(i));
             int level = calculateCharLevel(character);
-            int maxLivePoints = character.getXp()*(10+character.getBody());
-            character.setXp(xp);
+            String nameClass = character.getCharacterType();
+            switch (nameClass){
+                case "Adventurer":
+                    character.setLivePoints(level*(10+character.getBody()));
+                    character.setInitiative(character.getSpirit() + dice.rollDice(1, 12));
+                    break;
+            }
             characters.add(character);
         }
         return characters;
@@ -98,8 +103,13 @@ public class PlayManager {
         }
         return total;
     }
-    public Party preparationPhase(Party party, int numChar){
-            party.getCharacters().get(numChar).selfMotivated();
+    ////// COMPROBAAAARRRRRR
+    public ArrayList<Character> preparationPhase(ArrayList<Character> party, int numChar){
+        switch (party.get(numChar).getCharacterType()){
+            case "Adventurer":
+                party.get(numChar).setSpirit(party.get(numChar).getSpirit()+1);
+                break;
+        }
         return party;
     }
     public Adventure allMonstIniciate(Adventure adventure, int numFight){
