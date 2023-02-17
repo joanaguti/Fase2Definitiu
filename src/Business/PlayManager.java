@@ -9,6 +9,8 @@ import Persistence.CharactersJsonDAO;
 import java.sql.Array;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class PlayManager {
     private AdventuresJsonDAO advJsonDAO;
@@ -121,29 +123,58 @@ public class PlayManager {
 
         return adventure;
     }
-    public ArrayList<String> getAllMonstCharsFightNames(Party party, int numFight){
-        ArrayList<String> names = new ArrayList<>();
-        for(int i=0; i<party.getAdventure().getFightList().get(numFight).getMonsters().size(); i++){
-            names.add(party.getAdventure().getFightList().get(numFight).getMonsters().get(i).getMonster().getName());
-        }
-        for(int j=0; j<party.getCharacters().size() ; j++){
-            names.add(party.getCharacters().get(j).getName());
-        }
-        return names;
-    }
-    public ArrayList<Integer> getAllMonstCharsFightInit(Party party, int numFight){
-        ArrayList<Integer> initiatives = new ArrayList<>();
-        for(int i=0; i<party.getAdventure().getFightList().get(numFight).getMonsters().size(); i++){
-            initiatives.add(party.getAdventure().getFightList().get(numFight).getMonsters().get(i).getMonster().getInitiative());
-        }
-        for(int j=0; j<party.getCharacters().size() ; j++){
-            int initiative = dice.rollDice(12, 1) + party.getCharacters().get(j).getSpirit();
-            initiatives.add(initiative);
-        }
-        return initiatives;
-    }
-    public void battlePhase(){
 
+    ArrayList<Character> sortParty(ArrayList<Character> party) {
+
+
+        return party;
+    }
+
+
+    ArrayList<Adventure> sortMonstAdventure(ArrayList<Adventure> adventure){
+        return adventure;
+
+    }
+
+    public String getNameByIndex( int i, ArrayList<Character> characters){
+        for (int j = 0; j < characters.size(); j++) {
+            if(characters.get(j).getName().equals(characters.get(i).getName())){
+                return characters.get(j).getName();
+            }
+
+        }
+        return null;
+
+    }
+    public int getLivePointsByIndex( int i, ArrayList<Character> characters){
+        for (int j = 0; j < characters.size(); j++) {
+            if(characters.get(j).getLivePoints() == characters.get(i).getLivePoints()){
+                return characters.get(j).getLivePoints();
+            }
+
+        }
+        return 0;
+
+    }
+    public int getMaxPointsByIndex( int i, ArrayList<Character> characters){
+        for (int j = 0; j < characters.size(); j++) {
+            if(characters.get(j).getMaxLivePoints() == characters.get(i).getMaxLivePoints()){
+                return characters.get(j).getMaxLivePoints();
+            }
+
+        }
+        return 0;
+
+    }
+    public int battlePhase(ArrayList<Character> party, int numChar){
+        int damage=0;
+        switch (party.get(numChar).getCharacterType()){
+            case "Adventurer":
+                //COMPROVACIONS FALTA SEGONS EL NUMERO QUE HA SORTIT DE DICE
+                damage = dice.rollDice(1, 6)+party.get(numChar).getBody();
+                break;
+        }
+        return damage;
     }
     public void breakPhase(){
 

@@ -316,6 +316,27 @@ public class MenuController {
                 menu.showMessage("\n\n------------------------------");
                 menu.showMessage("*** Combat stage ***");
                 menu.showMessage("------------------------------");
+                int KO = 0;
+                do{
+                    KO ++;
+                    menu.showMessage("Round"+(KO+1));
+                    menu.showMessage("Party:");
+                    for(int i=0; i<party.size(); i++){
+                        menu.showMessage("\t-"+ pm.getNameByIndex(i, party)+ "\t\t"+ pm.getLivePointsByIndex(i, party)+" / "+pm.getMaxPointsByIndex(i, party)+" hit points");
+                    }
+
+                    /*
+                    aqui haurem de mirar qui va primer per ordre d'iniciativa:
+                        - si es mosntre atacara de forma aleatoria a un personatge ignirant inconcients
+                                el mal que li fara al personatge serà segons el tipus de dau (classe mosntre)
+                        - si es un personatge es el que ataca --> atacara el que tingui menys punts de vida
+                                el mal que fara sera mal = d6 + cos tenint en compte (3.1)
+
+                     */
+
+                } while (KO == 1);
+
+
                 //Numero de torns?
                 // Si no morts o inconscients seguim ordre iniciativa
                 // Aventurers fan Sword slash
