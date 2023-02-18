@@ -8,9 +8,7 @@ import Persistence.CharactersJsonDAO;
 
 import java.sql.Array;
 import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 public class PlayManager {
     private AdventuresJsonDAO advJsonDAO;
@@ -124,9 +122,8 @@ public class PlayManager {
         return adventure;
     }
 
-    ArrayList<Character> sortParty(ArrayList<Character> party) {
-
-
+    public ArrayList<Character> sortParty(ArrayList<Character> party) {
+        party.sort(new CharactersComparator());
         return party;
     }
 
