@@ -324,6 +324,9 @@ public class MenuController {
                     for(int i=0; i<party.size(); i++){
                         menu.showMessage("\t-"+ pm.getNameByIndex(i, party)+ "\t\t"+ pm.getLivePointsByIndex(i, party)+" / "+pm.getMaxPointsByIndex(i, party)+" hit points");
                     }
+                    for(int k=0; k<names.size(); k++){
+
+                    }
 
                     /*
                     aqui haurem de mirar qui va primer per ordre d'iniciativa:

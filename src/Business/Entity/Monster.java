@@ -21,6 +21,15 @@ public class Monster {
         this.damageDice = damageDice;
         this.damageType = damageType;
     }
+    public Monster(Monster monster){
+        this.name = monster.name;
+        this.challenge = monster.challenge;
+        this.experience = monster.experience;
+        this.hitPoints = monster.hitPoints;
+        this.initiative = monster.initiative;
+        this.damageDice = monster.damageDice;
+        this.damageType = monster.damageType;
+    }
 
 
     public String getNameMonster() {

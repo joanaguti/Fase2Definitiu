@@ -112,14 +112,40 @@ public class PlayManager {
         }
         return party;
     }
-    public Adventure allMonstIniciate(Adventure adventure, int numFight){
-        int random = dice.rollDice(12, 1);
+
+    public Boolean checkConcience (Character character){
+        if (character.getLivePoints() < 1){
+            return false;
+        }
+        return true;
+    }
+
+    public ArrayList<Character> modifyLivePoints (Character character, ArrayList<Character> party){
+        String nameChar = character.getName();
+
+        for (int i = 0; i < party.size(); i ++){
+            if(party.get(i).getName().equals(character.getName())){
+                party.get(i).setLivePoints(0);
+            }
+        }
+        return party;
+    }
+
+    public ArrayList<Monster> allMonstIniciative(Adventure adventure, int numFight){
+        ArrayList<Monster> monsters = new ArrayList<>();
+        int count=0;
         for(int i=0; i<adventure.getFightList().get(numFight).getMonsters().size(); i++){
-            int num = adventure.getFightList().get(numFight).getMonsters().get(i).getMonster().getInitiative();
-            adventure.getFightList().get(numFight).getMonsters().get(i).getMonster().setInitiative(num + random);
+
+            for(int j=0; j<adventure.getFightList().get(numFight).getMonsters().get(i).getNum(); j++){
+                Monster monster = new Monster(adventure.getFightList().get(numFight).getMonsters().get(i).getMonster());
+                monsters.add(count, monster);
+                int num = adventure.getFightList().get(numFight).getMonsters().get(i).getMonster().getInitiative();
+                monsters.get(count).setInitiative(num + dice.rollDice(12, 1));
+                count++;
+            }
         }
 
-        return adventure;
+        return monsters;
     }
 
     public ArrayList<Character> sortParty(ArrayList<Character> party) {
