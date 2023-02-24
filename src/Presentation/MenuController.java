@@ -326,6 +326,41 @@ public class MenuController {
                     }
                     for(int k=0; k<names.size(); k++){
 
+                        //calculem el valor del dau --> 2-10 atac normal i si es 10 atac critic
+                            // 0 --> fallit (mes petit que 2)
+                            // 1--> atac nomral (dau 2-10)
+                            // 2 --> atac doble (dau 10)
+
+                        int numOption = pm.checkAttackDice();
+
+                        if(numOption == 1 || numOption == 2){
+                            if(pm.monstOrChar(names.get(k), party)){  //es un char
+                                //en comptes de name atack retornem index i dps amb el aquell index trobem el nom
+                                String nameAttack = pm.getAttackChar(monsters);
+                                int damage = pm.battlePhaseChar(party, names.get(k), numOption);
+                                Character character = pm.searchCharacter(party, names.get(k));
+                                //controlar conciencia, si un monstre es incocnient s'enva fora de la batalla
+
+                                monsters = pm.applyDamageInMonst(damage, monsters);
+                                switch (cm.getOneCharType(character)){
+                                    case "Adventurer":
+                                        menu.showMessage(names.get(k) + "attacks"+ nameAttack + "with Sword slash");
+                                        menu.showMessage("Hits and deals "+ damage +" physical damage");
+                                        //check concience < 0 --> printf + borrar (monsters, names, init)
+                                        if (pm.checkConcienceMonst(monsters)){
+                                            menu.showMessage(nameAttack +" dies.");
+                                        }
+                                        break;
+                                }
+
+                            }else{  //es un monst
+                                System.out.println("ES UN MONSTRE EL QUE ATACA");
+                            }
+                        } else{
+                            System.out.println("ATAC FALLIT");
+                        }
+                        //controlar si es el final de batalla i depen de com passar a descans curt o seguir amb el
+                        //mateix combat
                     }
 
                     /*

@@ -121,8 +121,6 @@ public class PlayManager {
     }
 
     public ArrayList<Character> modifyLivePoints (Character character, ArrayList<Character> party){
-        String nameChar = character.getName();
-
         for (int i = 0; i < party.size(); i ++){
             if(party.get(i).getName().equals(character.getName())){
                 party.get(i).setLivePoints(0);
@@ -191,7 +189,8 @@ public class PlayManager {
     }
     public int battlePhase(ArrayList<Character> party, int numChar){
         int damage=0;
-        switch (party.get(numChar).getCharacterType()){
+       Character character = searchCharacter(party, name);
+        switch (character.getCharacterType()){
             case "Adventurer":
                 //COMPROVACIONS FALTA SEGONS EL NUMERO QUE HA SORTIT DE DICE
                 damage = dice.rollDice(1, 6)+party.get(numChar).getBody();
@@ -199,7 +198,69 @@ public class PlayManager {
         }
         return damage;
     }
+
+    public Character searchCharacter(ArrayList<Character> party, String name){
+        Character character = new Character();
+        for(int i=0; i<party.size(); i++){
+            if(name.equals(party.get(i).getName())){
+                character = party.get(i);
+            }
+        }
+        return character;
+    }
+    public Boolean monstOrChar(String name, ArrayList<Character> characers){
+        for(int i=0; i<characers.size(); i++){
+            if(name.equals(characers.get(i).getName())){
+                return true;
+            }
+        }
+        return false;
+    }
+    public int checkAttackDice(){
+        int random = dice.rollDice(1, 10);
+        if(random <=2){
+            return 0;
+        }else if(random < 10){
+            return 1;
+        }else{
+            return 3;
+        }
+    }
+
+    public String getAttackChar(ArrayList<Monster> monsters){
+        int num_ant = 100;
+        String name = null;
+        for (int i = 0; i < monsters.size(); i++) {
+            if (monsters.get(i).getHitPoints() < num_ant){
+                name = monsters.get(i).getName();
+            }
+        }
+        return name;
+    }
+
+    public ArrayList<Monster> applyDamageInMonst (int damage, ArrayList<Monster> monsters){
+        int num_ant = 100, count = 0;
+        for (int i = 0; i < monsters.size(); i++) {
+            if(monsters.get(i).getHitPoints() < num_ant){
+                count = i;
+                num_ant = monsters.get(i).getHitPoints();
+            }
+        }
+        monsters.get(count).setHitPoints(monsters.get(count).getHitPoints()-damage);
+        return monsters;
+    }
+
+    public Boolean checkConcienceMonst(ArrayList<Monster> monsters) {
+
+        for (int i = 0; i < monsters.size(); i++) {
+            if(monsters.get(i).getHitPoints() < 1){
+               return true;
+            }
+        }
+        return false;
+    }
     public void breakPhase(){
 
     }
+
 }
