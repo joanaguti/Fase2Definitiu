@@ -227,26 +227,22 @@ public class PlayManager {
         }
     }
 
-    public String getAttackChar(ArrayList<Monster> monsters){
-        int num_ant = 100;
-        String name = null;
-        for (int i = 0; i < monsters.size(); i++) {
-            if (monsters.get(i).getHitPoints() < num_ant){
-                name = monsters.get(i).getName();
-            }
-        }
-        return name;
+    public String getAttackCharName(ArrayList<Monster> monsters, int index){
+        return monsters.get(index).getName();
     }
 
-    public ArrayList<Monster> applyDamageInMonst (int damage, ArrayList<Monster> monsters){
-        int num_ant = 100, count = 0;
+    public int getMonstIndex(ArrayList<Monster> monsters){
+        int num_ant = 100, index;
         for (int i = 0; i < monsters.size(); i++) {
-            if(monsters.get(i).getHitPoints() < num_ant){
-                count = i;
+            if (monsters.get(i).getHitPoints() < num_ant){
                 num_ant = monsters.get(i).getHitPoints();
+                index = i;
             }
-        }
-        monsters.get(count).setHitPoints(monsters.get(count).getHitPoints()-damage);
+            return index;
+    }
+
+    public ArrayList<Monster> applyDamageInMonst(int damage, ArrayList<Monster> monsters, int index){
+        monsters.get(index).setHitPoints(monsters.get(index).getHitPoints()-damage);
         return monsters;
     }
 

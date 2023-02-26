@@ -336,12 +336,13 @@ public class MenuController {
                         if(numOption == 1 || numOption == 2){
                             if(pm.monstOrChar(names.get(k), party)){  //es un char
                                 //en comptes de name atack retornem index i dps amb el aquell index trobem el nom
-                                String nameAttack = pm.getAttackChar(monsters);
+                                int indexMonst = pm.getMonstIndex(monsters);
+                                String nameAttack = pm.getAttackCharName(monsters, indexMonst);
                                 int damage = pm.battlePhaseChar(party, names.get(k), numOption);
                                 Character character = pm.searchCharacter(party, names.get(k));
                                 //controlar conciencia, si un monstre es incocnient s'enva fora de la batalla
 
-                                monsters = pm.applyDamageInMonst(damage, monsters);
+                                monsters = pm.applyDamageInMonst(damage, monsters, indexMonst);
                                 switch (cm.getOneCharType(character)){
                                     case "Adventurer":
                                         menu.showMessage(names.get(k) + "attacks"+ nameAttack + "with Sword slash");
