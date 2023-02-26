@@ -234,29 +234,118 @@ public class PlayManager {
     public int getMonstIndex(ArrayList<Monster> monsters){
         int num_ant = 100, index;
         for (int i = 0; i < monsters.size(); i++) {
-            if (monsters.get(i).getHitPoints() < num_ant){
+            if (monsters.get(i).getHitPoints() < num_ant && monsters.get(i).getHitPoints() > 0) {
                 num_ant = monsters.get(i).getHitPoints();
                 index = i;
             }
+        }
+
             return index;
     }
 
-    public ArrayList<Monster> applyDamageInMonst(int damage, ArrayList<Monster> monsters, int index){
-        monsters.get(index).setHitPoints(monsters.get(index).getHitPoints()-damage);
-        return monsters;
-    }
 
-    public Boolean checkConcienceMonst(ArrayList<Monster> monsters) {
+    public Boolean checkConcienceMonst(ArrayList<Monster> monsters, String name) {
 
         for (int i = 0; i < monsters.size(); i++) {
-            if(monsters.get(i).getHitPoints() < 1){
+            if(monsters.get(i).getHitPoints() < 1 && monsters.get(i).getName().equals(name)){
                return true;
             }
         }
         return false;
     }
-    public void breakPhase(){
 
+
+    public ArrayList<Monster> applyDamageInMonst(int damage, ArrayList<Monster> monsters, int indexMonst) {
+        monsters.get(indexMonst).setHitPoints(monsters.get(indexMonst).getHitPoints()-damage);
+        if (monsters.get(indexMonst).getHitPoints() < 0){
+            monsters.get(indexMonst).setHitPoints(0);
+        }
+        return monsters;
+    }
+    public String getAttackMonstName(ArrayList<Character> characters){
+        int random;
+        String name;
+        do{
+            random = dice.rollDice(characters.size(), 1);
+            name =  characters.get(random -1).getName();
+        }while (characters.get(random -1).getLivePoints() <= 0);
+
+        return name;
+    }
+    public int battlePhaseMonst(ArrayList<Monster> monsters, int numOption, String name) {
+        String damageChr = null;
+        for (int i = 0; i < monsters.size(); i++) {
+            if (name.equals(monsters.get(i).getName())) {
+                damageChr = monsters.get(i).getDamageDice();
+            }
+        }
+
+        assert damageChr != null;
+
+        int num_rice = Integer.parseInt(damageChr.substring(1));
+        int damage = dice.rollDice(num_rice, 1 );
+
+        if (numOption == 2){
+            damage = damage * 2;
+        }
+        return damage;
+
+    }
+    public String getDamageType(ArrayList<Monster> monsters, String name){
+        String type = null;
+        for (int i = 0; i < monsters.size(); i++) {
+            if (name.equals(monsters.get(i).getName())) {
+                type = monsters.get(i).getDamageType();
+            }
+        }
+        return type.toLowerCase();
+    }
+    public ArrayList<Character> applyDamageInChar(int damage, ArrayList<Character> characters, String name){
+        for (int i = 0; i < characters.size(); i++) {
+            if (name.equals(characters.get(i).getName())) {
+                characters.get(i).setLivePoints(characters.get(i).getLivePoints()-damage);
+                if(characters.get(i).getLivePoints()<1){
+                    characters.get(i).setLivePoints(0);
+                }
+            }
+        }
+        return characters;
+    }
+
+    public boolean checkConcienceChar (String name, ArrayList<Character> characters){
+        for (int i = 0; i < characters.size(); i++) {
+            if (name.equals(characters.get(i).getName())) {
+                if(characters.get(i).getLivePoints() < 1){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public int unconsciousDoNotPlay(int k, ArrayList<String> names,  ArrayList<Character> characters){
+        System.out.println("NOM COMPROVAR: "     + names.get(k));
+
+            for (int j = 0; j < characters.size(); j++){
+                if(names.get(k).equals(characters.get(j).getName())){
+                    if (characters.get(j).getLivePoints() == 0){
+                        System.out.println("Entra pers mort");
+                        k++;
+                    }
+                }
+
+            }
+        System.out.println(" VALOR DE K = "  + k);
+
+        return k;
+    }
+    public int getIndexToRemoveMonst(ArrayList<String> names, int index, ArrayList<Monster> monsters, ArrayList<Integer> init){
+        int count=0;
+        for (int i = 0; i < names.size(); i++) {
+            if (monsters.get(index).getName().equals(names.get(i)) && init.get(i) == monsters.get(index).getInitiative()){
+                count =i;
+            }
+        }
+        return count;
     }
 
 }

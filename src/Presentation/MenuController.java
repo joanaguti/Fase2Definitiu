@@ -335,6 +335,9 @@ public class MenuController {
 
                         if(numOption == 1 || numOption == 2){
                             if(pm.monstOrChar(names.get(k), party)){  //es un char
+                                //k = pm.unconsciousDoNotPlay(k, names, party);
+
+
                                 //en comptes de name atack retornem index i dps amb el aquell index trobem el nom
                                 int indexMonst = pm.getMonstIndex(monsters);
                                 String nameAttack = pm.getAttackCharName(monsters, indexMonst);
@@ -345,17 +348,39 @@ public class MenuController {
                                 monsters = pm.applyDamageInMonst(damage, monsters, indexMonst);
                                 switch (cm.getOneCharType(character)){
                                     case "Adventurer":
-                                        menu.showMessage(names.get(k) + "attacks"+ nameAttack + "with Sword slash");
-                                        menu.showMessage("Hits and deals "+ damage +" physical damage");
+                                        menu.showMessage(names.get(k) + " attacks "+ nameAttack + " with Sword slash");
+                                        if (numOption == 2){
+                                            menu.showMessage("Critical hit and deals "+ damage +" physical damage\n");
+
+                                        }else{
+                                            menu.showMessage("Hits and deals "+ damage +" physical damage\n");
+                                        }
                                         //check concience < 0 --> printf + borrar (monsters, names, init)
-                                        if (pm.checkConcienceMonst(monsters)){
+                                        if (pm.checkConcienceMonst(monsters, nameAttack)){
+                                            int num = pm.getIndexToRemoveMonst(names, indexMonst, monsters, init);
+                                            names.remove(num);
+                                            init.remove(num);
+                                            monsters.remove(indexMonst);
                                             menu.showMessage(nameAttack +" dies.");
                                         }
                                         break;
                                 }
 
-                            }else{  //es un monst
-                                System.out.println("ES UN MONSTRE EL QUE ATACA");
+                            } else{  //es un monst
+                                String nameAttack = pm.getAttackMonstName(party);
+                                int damage = pm.battlePhaseMonst(monsters, numOption, names.get(k));
+                                party = pm.applyDamageInChar(damage, party, nameAttack);
+                                menu.showMessage(names.get(k) + " attacks "+ nameAttack + ".");
+                                if (numOption== 2){
+                                    menu.showMessage("Critical hit and deals "+ damage +" "+pm.getDamageType(monsters, names.get(k)) +" damage\n");
+                                } else{
+                                    menu.showMessage("Hits and deals "+ damage +" "+pm.getDamageType(monsters, names.get(k)) +" damage\n");
+                                }
+
+                                if (pm.checkConcienceChar(nameAttack, party)){
+                                    menu.showMessage(nameAttack +" falls unconscious.");
+                                }
+
                             }
                         } else{
                             System.out.println("ATAC FALLIT");
@@ -373,7 +398,7 @@ public class MenuController {
 
                      */
 
-                } while (KO == 1);
+                } while (KO == 1); // pm.getMonstIndex(monsters) != -1
 
 
                 //Numero de torns?
