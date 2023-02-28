@@ -323,16 +323,13 @@ public class PlayManager {
         return false;
     }
     public int unconsciousDoNotPlay(int k, ArrayList<String> names,  ArrayList<Character> characters){
-        System.out.println("NOM COMPROVAR: "     + names.get(k));
-
-            for (int j = 0; j < characters.size(); j++){
+            for (int j = 0; j < characters.size() && k < names.size(); j++){
                 if(names.get(k).equals(characters.get(j).getName())){
                     if (characters.get(j).getLivePoints() == 0){
-                        System.out.println("Entra pers mort");
                         k++;
+                        j=0;
                     }
                 }
-
             }
         System.out.println(" VALOR DE K = "  + k);
 

@@ -289,7 +289,9 @@ public class MenuController {
             ArrayList<Character> party = pm.createPartyList(partyCharsNames);
             menu.showMessage("\nTavern keeper: “Great, good luck on your adventure lads!”\n");
             menu.showMessage("The “"+pm.getAllAdventureNames().get(index-1)+"” will start soon...");
-            for(int j=0; j<am.getMaxFights(adventure); j++){
+            boolean flag = false;
+            for(int j=0; j<am.getMaxFights(adventure) && !flag; j++){
+
                 menu.showMessage("\n------------------------------");
                 menu.showMessage("Starting Encounter "+(j+1)+":");
 
@@ -324,33 +326,29 @@ public class MenuController {
                     for(int i=0; i<party.size(); i++){
                         menu.showMessage("\t-"+ pm.getNameByIndex(i, party)+ "\t\t"+ pm.getLivePointsByIndex(i, party)+" / "+pm.getMaxPointsByIndex(i, party)+" hit points");
                     }
-                    for(int k=0; k<names.size(); k++){
-
-                        //calculem el valor del dau --> 2-10 atac normal i si es 10 atac critic
+                    totalExp = 0;
+                    for(int k=0; k<names.size() && monsters.size() != 0 && !flag; k++){
+                        k = pm.unconsciousDoNotPlay(k, names, party);
+                        if(k < names.size()){
+                            //calculem el valor del dau --> 2-10 atac normal i si es 10 atac critic
                             // 0 --> fallit (mes petit que 2)
                             // 1--> atac nomral (dau 2-10)
                             // 2 --> atac doble (dau 10)
-
-                        int numOption = pm.checkAttackDice();
-
-                        if(numOption == 1 || numOption == 2){
-                            if(pm.monstOrChar(names.get(k), party)){  //es un char
-                                //k = pm.unconsciousDoNotPlay(k, names, party);
-
-
-                                //en comptes de name atack retornem index i dps amb el aquell index trobem el nom
-                                int indexMonst = pm.getMonstIndex(monsters);
-                                String nameAttack = pm.getAttackCharName(monsters, indexMonst);
-                                int damage = pm.battlePhaseChar(party, names.get(k), numOption);
-                                Character character = pm.searchCharacter(party, names.get(k));
-                                //controlar conciencia, si un monstre es incocnient s'enva fora de la batalla
-
-                                monsters = pm.applyDamageInMonst(damage, monsters, indexMonst);
-                                switch (cm.getOneCharType(character)){
-                                    case "Adventurer":
-                                        menu.showMessage(names.get(k) + " attacks "+ nameAttack + " with Sword slash");
-                                        if (numOption == 2){
-                                            menu.showMessage("Critical hit and deals "+ damage +" physical damage\n");
+                            int numOption = pm.checkAttackDice();
+                            if(numOption == 1 || numOption == 2){
+                                if(pm.monstOrChar(names.get(k), party)){  //es un char
+                                    //en comptes de name atack retornem index i dps amb el aquell index trobem el nom
+                                    int indexMonst = pm.getMonstIndex(monsters);
+                                    String nameAttack = pm.getAttackCharName(monsters, indexMonst);
+                                    int damage = pm.battlePhaseChar(party, names.get(k), numOption);
+                                    Character character = pm.searchCharacter(party, names.get(k));
+                                    //controlar conciencia, si un monstre es incocnient s'enva fora de la batalla
+                                    monsters = pm.applyDamageInMonst(damage, monsters, indexMonst);
+                                    switch (cm.getOneCharType(character)){
+                                        case "Adventurer":
+                                            menu.showMessage(names.get(k) + " attacks "+ nameAttack + " with Sword slash");
+                                            if (numOption == 2){
+                                                menu.showMessage("Critical hit and deals "+ damage +" physical damage\n");
 
                                         }else{
                                             menu.showMessage("Hits and deals "+ damage +" physical damage\n");
@@ -366,28 +364,37 @@ public class MenuController {
                                         break;
                                 }
 
-                            } else{  //es un monst
-                                String nameAttack = pm.getAttackMonstName(party);
-                                int damage = pm.battlePhaseMonst(monsters, numOption, names.get(k));
-                                party = pm.applyDamageInChar(damage, party, nameAttack);
-                                menu.showMessage(names.get(k) + " attacks "+ nameAttack + ".");
-                                if (numOption== 2){
-                                    menu.showMessage("Critical hit and deals "+ damage +" "+pm.getDamageType(monsters, names.get(k)) +" damage\n");
-                                } else{
-                                    menu.showMessage("Hits and deals "+ damage +" "+pm.getDamageType(monsters, names.get(k)) +" damage\n");
-                                }
+                                } else{  //es un monst
+                                    String nameAttack = pm.getAttackMonstName(party);
+                                    int damage = pm.battlePhaseMonst(monsters, numOption, names.get(k));
+                                    party = pm.applyDamageInChar(damage, party, nameAttack);
+                                    menu.showMessage(names.get(k) + " attacks "+ nameAttack + ".");
+                                    if (numOption== 2){
+                                        menu.showMessage("Critical hit and deals "+ damage +" "+pm.getDamageType(monsters, names.get(k)) +" damage\n");
+                                    } else{
+                                        menu.showMessage("Hits and deals "+ damage +" "+pm.getDamageType(monsters, names.get(k)) +" damage\n");
+                                    }
 
-                                if (pm.checkConcienceChar(nameAttack, party)){
-                                    menu.showMessage(nameAttack +" falls unconscious.");
-                                }
+                                    if (pm.checkConcienceChar(nameAttack, party)){
+                                        menu.showMessage(nameAttack +" falls unconscious.");
 
+                                    }
+
+                                }
+                            } else{
+                                //distingir monst o char
+                                System.out.println("ATAC FALLIT " + names.get(k));
                             }
-                        } else{
-                            System.out.println("ATAC FALLIT");
                         }
+
                         //controlar si es el final de batalla i depen de com passar a descans curt o seguir amb el
                         //mateix combat
+                        flag = pm.allCharactersInconcient(party);
+                        if (flag){
+                            menu.showMessage("Tavern keeper: “Lad, wake up. Yes, your party fell unconscious.” “Don’t worry, you are safe back at the Tavern.”");
+                        }
                     }
+
 
                     /*
                     aqui haurem de mirar qui va primer per ordre d'iniciativa:
@@ -398,16 +405,45 @@ public class MenuController {
 
                      */
 
-                } while (KO == 1); // pm.getMonstIndex(monsters) != -1
+                }
+                if(!flag){
+                    menu.showMessage("\n\n------------------------------");
+                    menu.showMessage("*** Short reset stage ***");
+                    menu.showMessage("------------------------------");
+                    //printar
+                    for (int i = 0; i < party.size(); i ++) {
+                        menu.showMessage(cm.getOneCharName(party.get(i)) + " gains "+ totalExp+" xp."); //treure \n
+                        int levelUp = pm.getIncrementedLevel(party.get(i), totalExp);
+                        party = pm.setLevel(party, party.get(i), totalExp);
+                        if(levelUp>-1){
+                            menu.showMessage(cm.getOneCharName(party.get(i)) + " levels up. They are now lvl "+ levelUp +"!");
+                        }
+                    }
+                    menu.showMessage("\n");
 
-
+                    for (int i = 0; i < party.size(); i ++) {
+                        if (pm.checkConcience(party.get(i))){
+                            //falta comprovar que estigui be
+                            int numHeals = pm.calculateNumHeals(party.get(i));
+                            party = pm.setHealsChar(party.get(i), numHeals, party);
+                            switch (party.get(i).getCharacterType()){
+                                case "Adventurer":
+                                    menu.showMessage(cm.getOneCharName(party.get(i)) + " uses " + "Bandage time. Heals " + numHeals + " hit points.");
+                                    break;
+                            }
+                        }else{
+                            menu.showMessage(cm.getOneCharName(party.get(i)) + " is unconscious");
+                        }
+                    }
+                }
                 //Numero de torns?
                 // Si no morts o inconscients seguim ordre iniciativa
                 // Aventurers fan Sword slash
                 //Monstre ataca un person aleatori
             }
-            //Guardar aventura entera y personajes enteros
-            // Party party = new Party(adventure, characters);
+            if(!flag){
+                menu.showMessage("Congratulations, your party completed “"+ pm.getAllAdventureNames().get(index-1)+ "”");
+            }
     }
 
     private void stopProgram(){
